@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".AddGuestActivity"
+    android:background="@drawable/gradient">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <ImageButton
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:background="@null"
+            android:src="@drawable/ic_arrow_back_white_24dp"
+            android:layout_gravity="top"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="127dp"
+            android:src="@drawable/logo"
+            android:layout_marginTop="20dp"
+            />
+
+
+
+        <EditText
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:id="@+id/vc"
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:background="#11000000"
+            android:ems="10"
+            android:hint="Vehicle Company"
+            android:inputType="textPersonName"
+            android:textSize="16dp"
+            android:layout_centerHorizontal="true" />
+
+        <EditText
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:id="@+id/vm"
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:background="#11000000"
+            android:ems="10"
+            android:hint="Vehicle Model"
+            android:inputType="textPersonName"
+            android:textSize="16dp"
+            android:layout_centerHorizontal="true" />
+
+        <EditText
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:id="@+id/color"
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:background="#11000000"
+            android:ems="10"
+            android:hint="Vehicle Color"
+            android:inputType="textEmailAddress"
+            android:textSize="16dp"
+            android:layout_centerHorizontal="true" />
+
+
+        <EditText
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:id="@+id/reg_num"
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:background="#11000000"
+            android:ems="10"
+            android:hint="Registration Number"
+            android:inputType="textPersonName"
+            android:textSize="16dp"
+            android:layout_centerHorizontal="true" />
+
+        <EditText
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:id="@+id/adate"
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:background="#11000000"
+            android:ems="10"
+            android:hint="Arrival Date:"
+            android:inputType="textPersonName"
+            android:textSize="16dp"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:background="#11000000"
+            android:ems="10"
+            android:textColor="#ffffff"
+            android:text="The default max duration of guest is 5 days as per society rules,You can extend their stay accordingly"
+            />
+
+
+        <Button
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:id="@+id/submit"
+            android:layout_width="150dp"
+            android:layout_height="35dp"
+
+            android:background="@drawable/mybutton"
+            android:text="SUBMIT"
+            />
+
+
+    </LinearLayout>
+
+</ScrollView>

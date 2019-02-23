@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "254769577544",
+    "firebase_url": "https://hawkeye-14d1e.firebaseio.com",
+    "project_id": "hawkeye-14d1e",
+    "storage_bucket": "hawkeye-14d1e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:254769577544:android:41575433513ea645",
+        "android_client_info": {
+          "package_name": "com.example.android.hawkeye"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "254769577544-os5r2qimo9s8j0cf6m63u08502pkhs39.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.android.hawkeye",
+            "certificate_hash": "c0db237d79b459fe9a4c15c21a4485caed99c71c"
+          }
+        },
+        {
+          "client_id": "254769577544-t7no4rh3vi18k9b93nknef86umgu7nf9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVv_XsXR614uohezsj9mncTJQdVtbY7Xc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "254769577544-t7no4rh3vi18k9b93nknef86umgu7nf9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient"
+    android:orientation="vertical"
+    android:gravity="center_vertical"
+    tools:context="com.example.android.hawkeye.MainActivity">
+
+
+    <ImageView
+        android:layout_gravity="center"
+        android:id="@+id/imageView"
+        android:layout_width="180dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="40dp"
+        app:srcCompat="@drawable/logo"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_gravity="center"
+        android:id="@+id/pno"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:background="#11000000"
+        android:ems="10"
+        android:hint="Phone Number"
+        android:inputType="textPersonName"
+        android:textSize="16dp"
+        android:layout_marginBottom="35dp"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_gravity="center"
+        android:id="@+id/password"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:background="#11000000"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:layout_marginBottom="35dp"
+         />
+
+    <Button
+        android:layout_gravity="center"
+        android:id="@+id/login_button"
+        android:layout_width="150dp"
+        android:layout_height="35dp"
+
+        android:background="@drawable/mybutton"
+        android:text="LOGIN"
+        />
+
+    <!--<android.support.v7.widget.CardView-->
+        <!--android:layout_width="300dp"-->
+        <!--android:layout_height="50dp"-->
+        <!--app:cardBackgroundColor="@color/colorAccent"-->
+        <!--app:cardCornerRadius="25dp"-->
+        <!--app:cardElevation="10dp"-->
+        <!--android:id="@+id/cardView"-->
+        <!--android:layout_marginBottom="31dp"-->
+        <!--android:layout_above="@+id/textView2"-->
+        <!--android:layout_centerHorizontal="true">-->
+
+        <!--<RelativeLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent">-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/textView"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_centerInParent="true"-->
+                <!--android:text="Login"-->
+                <!--android:textColor="#fff"-->
+                <!--android:textSize="18sp" />-->
+        <!--</RelativeLayout>-->
+    <!--</android.support.v7.widget.CardView>-->
+
+
+
+    <LinearLayout
+        android:layout_marginTop="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Not Registered? "
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="6dp" />
+
+        <TextView
+            android:layout_toRightOf="@+id/textView2"
+            android:id="@+id/register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/click_here"
+            android:textStyle="italic"
+            android:background="@drawable/mybutton"
+            android:onClick="showPopUp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="6dp" />
+
+
+
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_marginTop="30dp"
+        android:id="@+id/fp"
+        android:textSize="20dp"
+        android:layout_gravity="center"
+        android:textColor="#ffffff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Forgot Password"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="6dp" />
+
+
+    <!--<LinearLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="50dp"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_alignLeft="@+id/imageView"-->
+        <!--android:layout_alignStart="@+id/imageView"-->
+        <!--android:id="@+id/linearLayout">-->
+
+        <!--<ImageView-->
+            <!--android:id="@+id/imageView4"-->
+            <!--android:layout_width="30dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--app:srcCompat="@drawable/twitter" />-->
+
+        <!--<ImageView-->
+            <!--android:id="@+id/imageView3"-->
+            <!--android:layout_width="30dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="15dp"-->
+            <!--app:srcCompat="@drawable/instagram" />-->
+
+        <!--<ImageView-->
+            <!--android:id="@+id/imageView2"-->
+            <!--android:layout_width="30dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="15dp"-->
+            <!--app:srcCompat="@drawable/facebook" />-->
+    <!--</LinearLayout>-->
+    <TextView
+        android:id="@+id/txt_push_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:gravity="center_horizontal"
+        android:textColor="@color/colorPrimary"
+        android:textSize="26dp" />
+
+    <TextView
+        android:id="@+id/txt_reg_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
+
+</LinearLayout>
