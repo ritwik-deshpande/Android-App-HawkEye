@@ -58,6 +58,7 @@ public class GuardActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent= new Intent(GuardActivity.this,EntryLogActivity.class);
+                intent.putExtra("ID",id);
                 startActivity(intent);
             }
         });

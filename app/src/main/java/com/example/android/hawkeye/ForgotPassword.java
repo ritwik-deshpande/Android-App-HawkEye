@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -28,7 +29,7 @@ public class ForgotPassword extends AppCompatActivity {
     String npassword;
     String key;
     UtilFunctions utilFunctions;
-
+    ImageButton btn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,11 +41,20 @@ public class ForgotPassword extends AppCompatActivity {
         Log.d("TAG","Started forgotpassword activity");
         email_id=(EditText)findViewById(R.id.email);
         reset=(Button)findViewById(R.id.reset_button);
-
+        btn=(ImageButton)findViewById(R.id.back_button);
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mDatabaseReference = mFirebaseDatabase.getReference().child("clients");
 
         utilFunctions = new UtilFunctions();
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(ForgotPassword.this, MainActivity.class);
+               // i.putExtra("ID", id);
+                startActivity(i);
+            }
+        });
 
         reset.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,6 +138,15 @@ public class ForgotPassword extends AppCompatActivity {
 
             }
         });
+
+    }
+    @Override
+    public void onBackPressed(){
+
+        Intent i = new Intent(ForgotPassword.this,MainActivity.class);
+       // i.putExtra("ID", id);
+        startActivity(i);
+
 
     }
 }

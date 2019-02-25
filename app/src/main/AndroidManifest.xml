@@ -21,7 +21,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SignUp" />
+        <activity android:name=".SignUp"
+            android:noHistory="true"/>
 
         <service android:name=".MyFirebaseMessagingService">
             <intent-filter>
@@ -34,21 +35,28 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".ForgotPassword" />
+        <activity android:name=".ForgotPassword"
+            android:noHistory="true"/>
         <activity
             android:name=".GuardActivity"
             android:noHistory="true" />
         <activity
             android:name=".UserActivity"
-             />
+            android:noHistory="true"/>
         <activity android:name=".AdminActivity"
             android:noHistory="true"/>
-        <activity android:name=".AddVehicle" />
-        <activity android:name=".MyVehiclesUser" />
-        <activity android:name=".MyGuest" />
-        <activity android:name=".EntryLogActivity" />
-        <activity android:name=".AddGuestActivity" />
-        <activity android:name=".UserLogActivity"></activity>
+        <activity android:name=".AddVehicle"
+            android:noHistory="true"/>
+        <activity android:name=".MyVehiclesUser"
+            android:noHistory="true"/>
+        <activity android:name=".MyGuest"
+            android:noHistory="true"/>
+        <activity android:name=".EntryLogActivity"
+            android:noHistory="true"/>
+        <activity android:name=".AddGuestActivity"
+            android:noHistory="true"/>
+        <activity android:name=".UserLogActivity"
+            android:noHistory="true"></activity>
     </application>
 
 </manifest>

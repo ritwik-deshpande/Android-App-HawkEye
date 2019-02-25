@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -28,12 +29,15 @@ public class AddVehicle extends AppCompatActivity  implements PopupMenu.OnMenuIt
     String vehicle_model;
     String colour;
     String reg_number;
+    ImageButton btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_vehicle);
         imageView=(ImageView)findViewById(R.id.imageView);
+
+        btn=(ImageButton)findViewById(R.id.back_button);
 
         id=getIntent().getStringExtra("ID");
         si=getIntent().getStringExtra("SOCIETY");
@@ -43,6 +47,22 @@ public class AddVehicle extends AppCompatActivity  implements PopupMenu.OnMenuIt
         vehicle_color=(TextView)findViewById(R.id.color);
         submit=(Button)findViewById(R.id.submit);
         db= new DataBaseHelper();
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(id.substring(0,3).equals("USR")) {
+                    Intent i = new Intent(AddVehicle.this, UserActivity.class);
+                    i.putExtra("ID", id);
+                    startActivity(i);
+                }
+                if(id.substring(0,3).equals("ADM")) {
+                    Intent i = new Intent(AddVehicle.this, AdminActivity.class);
+                    i.putExtra("ID", id);
+                    startActivity(i);
+                }
+            }
+        });
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,6 +134,20 @@ public class AddVehicle extends AppCompatActivity  implements PopupMenu.OnMenuIt
                     imageView.setImageURI(selectedImage);
                 }
                 break;
+        }
+    }
+    @Override
+    public void onBackPressed(){
+
+        if(id.substring(0,3).equals("USR")) {
+            Intent i = new Intent(AddVehicle.this, UserActivity.class);
+            i.putExtra("ID", id);
+            startActivity(i);
+        }
+        if(id.substring(0,3).equals("ADM")) {
+            Intent i = new Intent(AddVehicle.this, AdminActivity.class);
+            i.putExtra("ID", id);
+            startActivity(i);
         }
     }
 }

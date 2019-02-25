@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +30,7 @@ public class AddGuestActivity extends AppCompatActivity {
     String si;
     Date dt;
     String ad;
+    ImageButton btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,7 @@ public class AddGuestActivity extends AppCompatActivity {
         vehicle_color=(TextView)findViewById(R.id.color);
         submit=(Button)findViewById(R.id.submit);
         dob=(TextView)findViewById(R.id.adate);
+        btn=findViewById(R.id.back_button);
         dob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,6 +72,21 @@ public class AddGuestActivity extends AppCompatActivity {
         });
         db= new DataBaseHelper();
 
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(id.substring(0,3).equals("USR")) {
+                    Intent i = new Intent(AddGuestActivity.this, UserActivity.class);
+                    i.putExtra("ID", id);
+                    startActivity(i);
+                }
+                if(id.substring(0,3).equals("ADM")) {
+                    Intent i = new Intent(AddGuestActivity.this, AdminActivity.class);
+                    i.putExtra("ID", id);
+                    startActivity(i);
+                }
+            }
+        });
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,5 +107,20 @@ public class AddGuestActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+    @Override
+    public void onBackPressed(){
+
+        if(id.substring(0,3).equals("USR")) {
+            Intent i = new Intent(AddGuestActivity.this, UserActivity.class);
+            i.putExtra("ID", id);
+            startActivity(i);
+        }
+        if(id.substring(0,3).equals("ADM")) {
+            Intent i = new Intent(AddGuestActivity.this, AdminActivity.class);
+            i.putExtra("ID", id);
+            startActivity(i);
+        }
+
     }
 }

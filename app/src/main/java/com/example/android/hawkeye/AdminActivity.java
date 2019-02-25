@@ -56,6 +56,7 @@ public class AdminActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent= new Intent(AdminActivity.this,EntryLogActivity.class);
+                intent.putExtra("ID",id);
                 startActivity(intent);
             }
         });
@@ -110,6 +111,7 @@ public class AdminActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(AdminActivity.this,UserLogActivity.class);
+                i.putExtra("ID",id);
                 startActivity(i);
             }
         });

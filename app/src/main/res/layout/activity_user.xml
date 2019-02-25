@@ -8,13 +8,13 @@
     android:layout_height="match_parent"
     tools:context=".UserActivity">
 
-    <ImageButton
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:background="@null"
-        android:src="@drawable/ic_arrow_back_white_24dp"
-        android:layout_gravity="top"
-        />
+    <!--<ImageButton-->
+        <!--android:layout_width="35dp"-->
+        <!--android:layout_height="35dp"-->
+        <!--android:background="@null"-->
+        <!--android:src="@drawable/ic_arrow_back_white_24dp"-->
+        <!--android:layout_gravity="top"-->
+        <!--/>-->
 
     <ImageView
         android:layout_gravity="center"

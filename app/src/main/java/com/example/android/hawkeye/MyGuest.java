@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,6 +31,7 @@ public class MyGuest extends AppCompatActivity {
     String id;
     String si;
 
+    ImageButton btn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,12 +48,30 @@ public class MyGuest extends AppCompatActivity {
 
         si=getIntent().getStringExtra("SOCIETY");
 
+        btn=findViewById(R.id.back_button);
+
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mDatabaseReference = mFirebaseDatabase.getReference().child("guest_vehicles");
 
         addv=(Button)findViewById(R.id.add);
         //rv=(Button)findViewById(R.id.remove);
 
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(id.substring(0,3).equals("USR")) {
+                    Intent i = new Intent(MyGuest.this, UserActivity.class);
+                    i.putExtra("ID", id);
+                    startActivity(i);
+                }
+                if(id.substring(0,3).equals("ADM")) {
+                    Intent i = new Intent(MyGuest.this, AdminActivity.class);
+                    i.putExtra("ID", id);
+                    startActivity(i);
+                }
+
+            }
+        });
 
         addv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,5 +116,20 @@ public class MyGuest extends AppCompatActivity {
 
         //recyclerView.scrollToPosition(0);
         //pg.setVisibility(View.GONE);
+    }
+    @Override
+    public void onBackPressed(){
+
+        if(id.substring(0,3).equals("USR")) {
+            Intent i = new Intent(MyGuest.this, UserActivity.class);
+            i.putExtra("ID", id);
+            startActivity(i);
+        }
+        if(id.substring(0,3).equals("ADM")) {
+            Intent i = new Intent(MyGuest.this, AdminActivity.class);
+            i.putExtra("ID", id);
+            startActivity(i);
+        }
+
     }
 }

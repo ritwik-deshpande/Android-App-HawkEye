@@ -2,6 +2,7 @@ package com.example.android.hawkeye;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -50,6 +52,8 @@ public class SignUp extends AppCompatActivity {
     String [] names;
     String id;
     String userkey;
+    ImageButton btn;
+    Button sae;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,10 +66,38 @@ public class SignUp extends AppCompatActivity {
         desc=getIntent().getStringExtra("Desc");
         userkey=getIntent().getStringExtra("userkey");
         db= new DataBaseHelper();
+
+
+        sae=findViewById(R.id.appr_email);
+        btn=findViewById(R.id.back_button);
+
         submit=(Button)findViewById(R.id.submit);
         utilFunctions=new UtilFunctions();
         dob=(EditText)findViewById(R.id.dob);
         names=new String[]{"Rambharose,Saraf Lane","Raj Apartment,Mira Road","Western Heights,DN Nagar","Rambharose,Saraf","Rambharose,Saraf","Rambharose,Saraf","Rambharose,Saraf"};
+
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(SignUp.this,MainActivity.class);
+                // i.putExtra("ID", id);
+                startActivity(i);
+            }
+        });
+
+        sae.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_SENDTO);
+                String mail="mailto:"+"spatankar224@gmail.com";
+                intent.setData(Uri.parse(mail));
+                intent.putExtra(Intent.EXTRA_SUBJECT, "APPROVAL EMAIL");
+                intent.putExtra(Intent.EXTRA_TEXT, "Approve me as ADMIN");
+                startActivity(intent);
+            }
+        });
+
         dob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -139,6 +171,8 @@ public class SignUp extends AppCompatActivity {
 
                 Log.d("TAG","The desc is"+desc);
 
+//                Intent i = new Intent(SignUp.this,MainActivity.class);
+                //startActivity(i);
                 if(desc.equals("user")){
                     id=utilFunctions.generate_id("USR");
                     client = new Client(fname,lname,email,gender, raddress, aadharno,DOB,society_info,password,desc,pno,id,userkey,false);
@@ -146,13 +180,13 @@ public class SignUp extends AppCompatActivity {
 
                     Toast.makeText(SignUp.this,"User Account created Successfully",Toast.LENGTH_SHORT).show();
 
-                    Intent intent = new Intent(SignUp.this,UserActivity.class);
+                    Intent intent = new Intent(SignUp.this,MainActivity.class);
 
-                    SaveSharedPreference.setUserName(SignUp.this,id);
+                 //   SaveSharedPreference.setUserName(SignUp.this,id);
 
-                    Log.d("TAG","The id is"+id);
+                  //  Log.d("TAG","The id is"+id);
 
-                    intent.putExtra("ID",id);
+//                    intent.putExtra("ID",id);
 
                     startActivity(intent);
                 }
@@ -162,23 +196,23 @@ public class SignUp extends AppCompatActivity {
                     db.createClient(client);
 
                     Toast.makeText(SignUp.this,"Guard Account created Successfully",Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(SignUp.this,GuardActivity.class);
-                    intent.putExtra("ID",id);
+                    Intent intent = new Intent(SignUp.this,MainActivity.class);
+                   // intent.putExtra("ID",id);
 
-                    SaveSharedPreference.setUserName(SignUp.this,id);
+                   // SaveSharedPreference.setUserName(SignUp.this,id);
 
                     startActivity(intent);
                 }
                 if(desc.equals("admin")){
                     id=utilFunctions.generate_id("ADM");
-                    client = new Client(fname,lname,email,gender, raddress, aadharno,DOB,society_info,password,desc,pno,id,userkey,true);
+                    client = new Client(fname,lname,email,gender, raddress, aadharno,DOB,society_info,password,desc,pno,id,userkey,false);
                     db.createClient(client);
 
                     Toast.makeText(SignUp.this,"Admin Account created Successfully",Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(SignUp.this,AdminActivity.class);
-                    intent.putExtra("ID",id);
+                    Intent intent = new Intent(SignUp.this,MainActivity.class);
+                    //intent.putExtra("ID",id);
 
-                    SaveSharedPreference.setUserName(SignUp.this,id);
+                    //SaveSharedPreference.setUserName(SignUp.this,id);
 
                     startActivity(intent);
                 }
@@ -187,6 +221,15 @@ public class SignUp extends AppCompatActivity {
 
             }
         });
+
+    }
+    @Override
+    public void onBackPressed(){
+
+        Intent i = new Intent(SignUp.this,MainActivity.class);
+        // i.putExtra("ID", id);
+        startActivity(i);
+
 
     }
 }
