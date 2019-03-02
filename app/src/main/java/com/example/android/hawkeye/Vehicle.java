@@ -1,13 +1,13 @@
 package com.example.android.hawkeye;
 
 public class Vehicle {
-    String userid;
-    String vehicle_company;
-    String vehicle_model;
-    String colour;
+    private String userid;
+    private String vehicle_company;
+    private String vehicle_model;
+    private String colour;
     String reg_number;
-    String image_url;
-    String s_info;
+    private String image_url;
+    private String s_info;
 
     public Vehicle() {
     }
@@ -25,8 +25,8 @@ public class Vehicle {
         return s_info;
     }
 
-    public void setS_info(String society_info) {
-        this.s_info = society_info;
+    public void setS_info(String s_info) {
+        this.s_info = s_info;
     }
 
 

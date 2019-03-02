@@ -4,6 +4,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
 
     <application
         android:allowBackup="true"
@@ -21,6 +24,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDpgMxJGANLpQP3F2wH4zNtw5ATFO8ldAQ" />
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
+
         <activity
             android:name=".SignUp"
             android:noHistory="true" />
@@ -66,9 +79,11 @@
         <activity
             android:name=".UserLogActivity"
             android:noHistory="true" />
-        <activity android:name=".Validate"
-            android:noHistory="true">
-        </activity>
+        <activity
+            android:name=".Validate"
+            android:noHistory="true" />
+        <activity android:name=".ForcedValidate" />
+        <activity android:name=".Maps"></activity>
     </application>
 
 </manifest>

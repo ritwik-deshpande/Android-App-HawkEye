@@ -83,7 +83,7 @@ public class AddVehicle extends AppCompatActivity  implements PopupMenu.OnMenuIt
                     startActivity(intent);
                 }
                 if(id.substring(0,3).equals("ADM")){
-                    Intent intent = new Intent(AddVehicle.this, UserActivity.class);
+                    Intent intent = new Intent(AddVehicle.this, AdminActivity.class);
                     intent.putExtra("ID", id);
                     intent.putExtra("SOCIETY", si);
                     Toast.makeText(AddVehicle.this, "Added your vehicle to db successfully", Toast.LENGTH_SHORT).show();

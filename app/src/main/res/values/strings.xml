@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">HawkEye</string>
     <string name="click_here">Click here</string>
+    <string name="map_d">Select Society for Parking</string>
 </resources>

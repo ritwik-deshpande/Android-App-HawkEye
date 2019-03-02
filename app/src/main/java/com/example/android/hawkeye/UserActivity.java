@@ -31,6 +31,8 @@ public class UserActivity extends AppCompatActivity {
     Button val;
     String email_addr;
     String key;
+    Button map_btn;
+    Boolean fd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,18 +53,73 @@ public class UserActivity extends AppCompatActivity {
         logout=(Button)findViewById(R.id.logout);
         val=(Button)findViewById(R.id.validate);
         mFirebaseDatabase2=FirebaseDatabase.getInstance();
+        map_btn=(Button)findViewById(R.id.map_btn);
         mDatabaseReference2=mFirebaseDatabase2.getReference().child("clients");
         mDatabaseReference3=mFirebaseDatabase2.getReference().child("clients");
         mDatabaseReference4=mFirebaseDatabase2.getReference().child("clients");
-        mDatabaseReference5=mFirebaseDatabase2.getReference().child("enty_log");
+        mDatabaseReference5=mFirebaseDatabase2.getReference().child("entrylog");
 
+        fd=false;
+
+
+        map_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent= new Intent(UserActivity.this,Maps.class);
+                startActivity(intent);
+            }
+        });
         val.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(UserActivity.this,Validate.class);
-                intent.putExtra("ID",id);
+//                Intent intent = new Intent(UserActivity.this,Validate.class);
+//                intent.putExtra("ID",id);
+
+
+
+                mDatabaseReference5.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            Log.d("TAG","gjvvhjkj "+(Boolean) snapshot.child("exit_status").getValue());
+                            if(snapshot.child("uid").exists() && (!(Boolean) snapshot.child("exit_status").getValue()) && id.equals((String) snapshot.child("uid").getValue())){
+                                // email_addr=snapshot.child("email").getValue().toString();
+                               // si = (String)snapshot.child("society_info").getValue();
+                              //  Log.d("SET","SEtv the value of si"+si);
+                                fd=true;
+                                break;
+                            }
+                        }
+
+                        if(fd){
+                            Intent intent = new Intent(UserActivity.this,Validate.class);
+                            intent.putExtra("ID",id);
+                            startActivity(intent);
+
+                        }
+                        else{
+                            Toast.makeText(UserActivity.this, "You do not have any invalidated exits", Toast.LENGTH_SHORT).show();
+
+                        }
+//                        Log.d("SEN","Sending si"+si);
+//                        intent.putExtra("SOCIETY",si);
+//                        startActivity(intent);
+
+                    }
+
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
             }
         });
+
+
 
         av.setOnClickListener(new View.OnClickListener() {
             @Override

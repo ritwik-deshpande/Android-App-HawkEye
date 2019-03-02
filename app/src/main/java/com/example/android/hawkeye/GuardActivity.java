@@ -29,7 +29,7 @@ public class GuardActivity extends AppCompatActivity {
     Button vel;
     Button ra;
     Button lo;
-
+    Button fv;
     String id;
 
     UtilFunctions utilFunctions;
@@ -50,10 +50,21 @@ public class GuardActivity extends AppCompatActivity {
         vel=(Button)findViewById(R.id.entry_log);
         lo=(Button)findViewById(R.id.logout);
         ra=(Button)findViewById(R.id.raise_alarm);
+        fv=(Button)findViewById(R.id.forced_validate);
+
 
         utilFunctions= new UtilFunctions();
         mFirebaseDatabase3=FirebaseDatabase.getInstance();
         mDatabaseReference3=mFirebaseDatabase3.getReference().child("clients");
+
+        fv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent= new Intent(GuardActivity.this,EntryLogActivity.class);
+                intent.putExtra("ID",id);
+                startActivity(intent);
+            }
+        });
 
         vel.setOnClickListener(new View.OnClickListener() {
             @Override
