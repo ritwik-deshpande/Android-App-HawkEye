@@ -70,7 +70,7 @@ public class RecyclerViewAdapter extends  RecyclerView.Adapter<RecyclerViewAdapt
                                 snapshot.getRef().removeValue();
                             }
                         }
-                        Intent intent = new Intent(context,UserActivity.class);
+                        Intent intent = new Intent(context,MyVehiclesUser.class);
                         intent.putExtra("ID",vehicles.get(i).getUserid());
 
                         Toast.makeText(context,"Removed your vehicle from db",Toast.LENGTH_SHORT).show();

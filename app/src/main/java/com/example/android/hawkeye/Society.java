@@ -3,20 +3,20 @@ package com.example.android.hawkeye;
 public class Society
 {
     private String societyName;
-    private long latitude;
-    private long longitude;
+    private double latitude;
+    private double longitude;
     private String address;
-    private long parkSlots;
+    private double parkSlots;
 
     public Society(){}
     //add getter setters.
 
 
-    public long getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(long latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
@@ -28,11 +28,11 @@ public class Society
         this.societyName = societyName;
     }
 
-    public long getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(long longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
@@ -44,11 +44,11 @@ public class Society
         this.address = address;
     }
 
-    public long getParkSlots() {
+    public double getParkSlots() {
         return parkSlots;
     }
 
-    public void setParkSlots(long parkSlots) {
+    public void setParkSlots(double parkSlots) {
         this.parkSlots = parkSlots;
     }
 }

@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private TextView txtRegId, txtMessage,forgotpassword;
     EditText pno,pword;
-
+    static String type;
     private FirebaseDatabase mFirebaseDatabase,mFirebaseDatabase2;
     private DatabaseReference mDatabaseReference,mDatabaseReference2;
     private DatabaseReference mPushDatabaseReference,mPushDatabaseReference2;
@@ -138,17 +138,21 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             if(nty==null) {
 
                 if (sid.substring(0, 3).equals("USR")) {
+
+                    type = "USR";
                     Intent intent = new Intent(MainActivity.this, UserActivity.class);
                     intent.putExtra("ID", sid);
                     startActivity(intent);
                 }
                 if (sid.substring(0, 3).equals("GRD")) {
+                    type = "GRD";
                     Intent intent = new Intent(MainActivity.this, GuardActivity.class);
                     intent.putExtra("ID", sid);
                     startActivity(intent);
 
                 }
                 if (sid.substring(0, 3).equals("ADM")) {
+                    type = "ADM";
                     Intent intent = new Intent(MainActivity.this, AdminActivity.class);
                     intent.putExtra("ID", sid);
                     startActivity(intent);
@@ -157,17 +161,20 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             }
             else{
                 if (sid.substring(0, 3).equals("USR")) {
+                    type = "USR";
                     Intent intent = new Intent(MainActivity.this, Validate.class);
                     intent.putExtra("ID", sid);
                     startActivity(intent);
                 }
                 if (sid.substring(0, 3).equals("GRD")) {
+                    type = "GRD";
                     Intent intent = new Intent(MainActivity.this, GuardActivity.class);
                     intent.putExtra("ID", sid);
                     startActivity(intent);
 
                 }
                 if (sid.substring(0, 3).equals("ADM")) {
+                    type = "ADM";
                     Intent intent = new Intent(MainActivity.this, Validate.class);
                     intent.putExtra("ID", sid);
                     startActivity(intent);
@@ -386,7 +393,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     @Override
     public boolean onMenuItemClick(MenuItem menuItem) {
         switch (menuItem.getItemId()){
-            case R.id.guard:
+           /* case R.id.guard:
             {
                 Intent i = new Intent(MainActivity.this,SignUp.class);
                 i.putExtra("Desc","guard");
@@ -395,6 +402,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 startActivity(i);
             }
             break;
+            */
             case R.id.user:
             {
                 Intent i = new Intent(MainActivity.this,SignUp.class);

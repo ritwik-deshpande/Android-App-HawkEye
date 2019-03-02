@@ -1,13 +1,11 @@
 package com.example.android.hawkeye;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -27,16 +25,17 @@ import com.google.firebase.events.Event;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Maps  extends FragmentActivity implements OnMapReadyCallback,AdapterView.OnItemSelectedListener {
+public class Maps  extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     List<Society> lst;
+    List<Marker> markers;
 
     DatabaseReference rootRef, imagesRef;
     ValueEventListener valueEventListener;
 
-    Marker vnit_marker,civil_marker,elec_marker,phy_marker,mech_marker,audi_marker,meta_marker,hostel_section_marker,ece_marker,chem_marker,canara_marker,archi_marker,audi_lawns_marker,apm_marker,lib_lawns_marker,cse_marker;
-    LatLng vnit,civil,electrical,phy,mech,audi,meta,hostel_section,ece,chem,canara,archi,audi_lawns,apm,lib_lawns,cse;
+    //Marker vnit_marker,civil_marker,elec_marker,phy_marker,mech_marker,audi_marker,meta_marker,hostel_section_marker,ece_marker,chem_marker,canara_marker,archi_marker,audi_lawns_marker,apm_marker,lib_lawns_marker,cse_marker;
+    //LatLng vnit,civil,electrical,phy,mech,audi,meta,hostel_section,ece,chem,canara,archi,audi_lawns,apm,lib_lawns,cse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,45 +47,14 @@ public class Maps  extends FragmentActivity implements OnMapReadyCallback,Adapte
         mapFragment.getMapAsync(this);
 
         lst=new ArrayList<>();
-
-        Spinner spinner = (Spinner)findViewById(R.id.spinner);
-
-        // Spinner click listener
-        spinner.setOnItemSelectedListener(this);
-
-        List<String> categories = new ArrayList<String>();
-        categories.add("Select Event");
-        categories.add("AQUAHUNT");
-        categories.add("AQUASKYLARK");
-        categories.add("AUTOBOT");
-        categories.add("BRAINSTORM");
-        categories.add("CREPIDO");
-        categories.add("CRYPTOCRUX");
-        categories.add("DEVISE");
-        categories.add("DEXTER");
-        categories.add("ELECTROBLITZ");
-        categories.add("FREAK-O-MATRIX");
-        categories.add("GAMESUTRA");
-        categories.add("INFORMALS");
-        categories.add("LASER-LITT");
-        categories.add("MECHATRYST");
-        categories.add("PARADEIGMA");
-        categories.add("ROBOCUP");
-        categories.add("ROBOWARS");
-        categories.add("ROBO TERRAFORMER");
-        categories.add("TECHNO.DOCX");
-        categories.add("TURBOFLUX");
-        categories.add("WALL STREET");
-        categories.add("WHO'S THE BOSS");
+        markers = new ArrayList<>();
 
         // Creating adapter for spinner
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
+        //ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
 
         // Drop down layout style - list view with radio button
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        // attaching data adapter to spinner
-        spinner.setAdapter(dataAdapter);
     }
 
 
@@ -104,6 +72,7 @@ public class Maps  extends FragmentActivity implements OnMapReadyCallback,Adapte
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
+        /*
         vnit = new LatLng(21.123104, 79.051511);
         civil = new LatLng(21.123206,79.052165);
         electrical = new LatLng(21.122682,79.052438);
@@ -120,7 +89,11 @@ public class Maps  extends FragmentActivity implements OnMapReadyCallback,Adapte
         apm = new LatLng(21.123476,79.052087);
         lib_lawns = new LatLng(21.124914,79.051304);
         cse = new LatLng(21.125143,79.052318);
+        */
 
+        FetchEventList fel = new FetchEventList();
+        fel.execute();
+        /*
         vnit_marker = mMap.addMarker(new MarkerOptions().position(vnit).title("VNIT"));
         civil_marker = mMap.addMarker(new MarkerOptions().position(civil).title("CIVIL DEPARTMENT"));
         elec_marker = mMap.addMarker(new MarkerOptions().position(electrical).title("ELECTRICAL DEPARTMENT"));
@@ -140,97 +113,124 @@ public class Maps  extends FragmentActivity implements OnMapReadyCallback,Adapte
 
         moveCamera(vnit,vnit_marker,"Select Event","VNIT");
 
+
+        */
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                int j;
+                //String actionId = markerMap.get(marker.getId());
+                for(j=0; j<markers.size(); j++)
+                {
+                    if(marker.getPosition().equals(markers.get(j).getPosition()))
+                        break;
+                }
+                if(lst.get(j).getParkSlots() == 0)
+                {
+                    Toast.makeText(Maps.this, "There are no available slots here :(", Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    Intent intent = new Intent(Maps.this, RentPark.class);
+                    intent.putExtra("SocietyName",lst.get(j).getSocietyName());
+                    intent.putExtra("parkSlots",lst.get(j).getParkSlots());
+                    intent.putExtra("Rent",100);
+                    startActivity(intent);
+                }
+
+
+            }
+        });
         mMap.setBuildingsEnabled(true);
-
     }
+    /*
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-        String item = parent.getItemAtPosition(position).toString();
-        if (item == "Select Event") {
-            moveCamera(vnit, vnit_marker, item, "VNIT");
+            String item = parent.getItemAtPosition(position).toString();
+            if (item == "Select Event") {
+               // moveCamera(vnit, vnit_marker, item, "VNIT");
+            }
+            else if(item == "AQUAHUNT") {
+                moveCamera(hostel_section,hostel_section_marker,item,"HOSTEL SECTION");
+            }
+            else if(item == "AQUASKYLARK") {
+                moveCamera(canara,canara_marker,item,"CANARA BANK");
+            }
+            else if(item == "AUTOBOT") {
+                moveCamera(meta,meta_marker,item,"METALLURGY DEPARTMENT");
+            }
+            else if(item == "BRAINSTORM") {
+                moveCamera(cse,cse_marker,item,"COMPUTER SCIENCE DEPARTMENT");
+            }
+            else if(item == "CREPIDO") {
+                moveCamera(canara,canara_marker,item,"CANARA BANK");
+            }
+            else if(item == "CRYPTOCRUX") {
+                moveCamera(cse,cse_marker,item,"COMPUTER SCIENCE DEPARTMENT");
+            }
+            else if(item == "DEVISE") {
+                moveCamera(archi,archi_marker,item,"ARCHITECTURE DEPARTMENT");
+            }
+            else if(item == "DEXTER") {
+                moveCamera(electrical,elec_marker,item,"ELECTRICAL DEPARTMENT");
+            }
+            else if(item == "ELECTROBLITZ") {
+                moveCamera(cse,cse_marker,item,"COMPUTER SCIENCE DEPARTMENT");
+            }
+            else if(item == "FREAK-O-MATRIX") {
+                moveCamera(chem,chem_marker,item,"CHEMICAL DEPARTMENT");
+            }
+            else if(item == "GAMESUTRA") {
+                moveCamera(meta,meta_marker,item,"METALLURGY DEPARTMENT");
+            }
+            else if(item == "INFORMALS") {
+                moveCamera(lib_lawns,lib_lawns_marker,item,"LIBRARY LAWNS");
+            }
+            else if(item == "LASERLITT") {
+                moveCamera(canara,canara_marker,item,"CANARA BANK");
+            }
+            else if(item == "MECHATRYST") {
+                moveCamera(audi_lawns,audi_lawns_marker,item,"AUDITORIUM LAWNS");
+            }
+            else if(item  == "PARADEIGMA") {
+                moveCamera(audi,audi_marker,item,"AUDITORIUM");
+            }
+            else if(item == "ROBOWARS") {
+                moveCamera(apm,apm_marker,item,"APPLIED MECHANICS DEPARTMENT");
+            }
+            else if(item == "ROBO TERRAFORMER") {
+                moveCamera(meta,meta_marker,item,"METALLURGY DEPARTMENT");
+            }
+            else if(item == "ROBOCUP") {
+                moveCamera(canara,canara_marker,item,"CANARA BANK");
+            }
+            else if(item == "TECHNO.DOCX") {
+                moveCamera(mech,mech_marker,item,"MECHANICAL DEPARTMENT");
+            }
+            else if(item == "TURBOFLUX") {
+                moveCamera(canara,canara_marker,item,"CANARA BANK");
+            }
+            else if(item == "WALL STREET") {
+                moveCamera(audi,audi_marker,item,"AUDITORIUM");
+            }
+            else if (item == "WHO'S THE BOSS") {
+                moveCamera(chem, chem_marker, item, "CHEMICAL DEPARTMENT");
+            }
+            else {
+                LatLng electrical = new LatLng(21.122682, 79.052438);
+                moveCamera(electrical, elec_marker, item, "ELECTRICAL DEPARTMENT");
+            }
         }
-        else if(item == "AQUAHUNT") {
-            moveCamera(hostel_section,hostel_section_marker,item,"HOSTEL SECTION");
-        }
-        else if(item == "AQUASKYLARK") {
-            moveCamera(canara,canara_marker,item,"CANARA BANK");
-        }
-        else if(item == "AUTOBOT") {
-            moveCamera(meta,meta_marker,item,"METALLURGY DEPARTMENT");
-        }
-        else if(item == "BRAINSTORM") {
-            moveCamera(cse,cse_marker,item,"COMPUTER SCIENCE DEPARTMENT");
-        }
-        else if(item == "CREPIDO") {
-            moveCamera(canara,canara_marker,item,"CANARA BANK");
-        }
-        else if(item == "CRYPTOCRUX") {
-            moveCamera(cse,cse_marker,item,"COMPUTER SCIENCE DEPARTMENT");
-        }
-        else if(item == "DEVISE") {
-            moveCamera(archi,archi_marker,item,"ARCHITECTURE DEPARTMENT");
-        }
-        else if(item == "DEXTER") {
-            moveCamera(electrical,elec_marker,item,"ELECTRICAL DEPARTMENT");
-        }
-        else if(item == "ELECTROBLITZ") {
-            moveCamera(cse,cse_marker,item,"COMPUTER SCIENCE DEPARTMENT");
-        }
-        else if(item == "FREAK-O-MATRIX") {
-            moveCamera(chem,chem_marker,item,"CHEMICAL DEPARTMENT");
-        }
-        else if(item == "GAMESUTRA") {
-            moveCamera(meta,meta_marker,item,"METALLURGY DEPARTMENT");
-        }
-        else if(item == "INFORMALS") {
-            moveCamera(lib_lawns,lib_lawns_marker,item,"LIBRARY LAWNS");
-        }
-        else if(item == "LASERLITT") {
-            moveCamera(canara,canara_marker,item,"CANARA BANK");
-        }
-        else if(item == "MECHATRYST") {
-            moveCamera(audi_lawns,audi_lawns_marker,item,"AUDITORIUM LAWNS");
-        }
-        else if(item  == "PARADEIGMA") {
-            moveCamera(audi,audi_marker,item,"AUDITORIUM");
-        }
-        else if(item == "ROBOWARS") {
-            moveCamera(apm,apm_marker,item,"APPLIED MECHANICS DEPARTMENT");
-        }
-        else if(item == "ROBO TERRAFORMER") {
-            moveCamera(meta,meta_marker,item,"METALLURGY DEPARTMENT");
-        }
-        else if(item == "ROBOCUP") {
-            moveCamera(canara,canara_marker,item,"CANARA BANK");
-        }
-        else if(item == "TECHNO.DOCX") {
-            moveCamera(mech,mech_marker,item,"MECHANICAL DEPARTMENT");
-        }
-        else if(item == "TURBOFLUX") {
-            moveCamera(canara,canara_marker,item,"CANARA BANK");
-        }
-        else if(item == "WALL STREET") {
-            moveCamera(audi,audi_marker,item,"AUDITORIUM");
-        }
-        else if (item == "WHO'S THE BOSS") {
-            moveCamera(chem, chem_marker, item, "CHEMICAL DEPARTMENT");
-        }
-        else {
-            LatLng electrical = new LatLng(21.122682, 79.052438);
-            moveCamera(electrical, elec_marker, item, "ELECTRICAL DEPARTMENT");
-        }
-    }
 
 
 
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-        LatLng vnit = new LatLng(21.123104, 79.051511);
-        moveCamera(vnit,vnit_marker,"Select Event", "VNIT");
-    }
-
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+            LatLng vnit = new LatLng(21.123104, 79.051511);
+            moveCamera(vnit,vnit_marker,"Select Event", "VNIT");
+        }
+    */
     public void moveCamera(LatLng loc, Marker marker, String event_name, String loc_name)
     {
         mMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
@@ -262,23 +262,31 @@ public class Maps  extends FragmentActivity implements OnMapReadyCallback,Adapte
             lst.clear();
             rootRef = FirebaseDatabase.getInstance().getReference();
             imagesRef = rootRef.child("Societies");
+            LatLng loc = new LatLng(25.27654535,82.98884151);
+            moveCamera(loc,mMap.addMarker(new MarkerOptions().position(loc) ),"Plumeria","Plumeria");
             valueEventListener = new ValueEventListener() {
+
+                int i =0;
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     //Toast.makeText(getContext(),"retrieving data",Toast.LENGTH_SHORT).show();
                     for(DataSnapshot ds : dataSnapshot.getChildren()) {
 
                         lst.add((ds.getValue(Society.class)));
+                        markers.add(mMap.addMarker(new MarkerOptions().position(new LatLng(lst.get(i).getLatitude(),lst.get(i).getLongitude())).title(lst.get(i).getSocietyName())));
                         Log.d("TAG","firebase created event object");
+                        i++;
                     }
                     //Log.d("Size of list is ","size=" + ((Integer) lst.size()).toString());
 
                     //runAnimation(recyclerView,0);
+
                 }
                 @Override
                 public void onCancelled(DatabaseError databaseError) {}
             };
             imagesRef.addListenerForSingleValueEvent(valueEventListener);
+
             return null;
         }
     }

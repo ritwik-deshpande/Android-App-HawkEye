@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -30,6 +31,7 @@ public class AddGuestActivity extends AppCompatActivity {
     String si;
     Date dt;
     String ad;
+    String sd;
     ImageButton btn;
 
     @Override
@@ -64,6 +66,9 @@ public class AddGuestActivity extends AppCompatActivity {
 
                         month++;
                         dob.setText(year+"/"+month+"/"+day);
+                        sd="Date:"+year+"/"+month+"/"+day;
+
+                        Log.d("TAG","the date is :"+sd);
                         dt=c.getTime();
                     }
                 },day,month,year);
@@ -97,7 +102,7 @@ public class AddGuestActivity extends AppCompatActivity {
                 ad=dob.getText().toString();
 
 
-                db.createGuestVehicle(new vehicle_guest(id,vehicle_company,vehicle_model,colour,reg_number,si,dt,5));
+                db.createGuestVehicle(new vehicle_guest(id,vehicle_company,vehicle_model,colour,reg_number,si,dt,5,sd));
 
                 if(id.substring(0,3).equals("USR"))
                 {

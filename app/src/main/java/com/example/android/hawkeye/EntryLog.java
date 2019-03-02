@@ -8,7 +8,18 @@ public class EntryLog {
     Date timestamp;
     String dsc;
     String timestamp_dsc;
+    String datetime;
+
+    public String getDatetime() {
+        return datetime;
+    }
+
+    public void setDatetime(String datetime) {
+        this.datetime = datetime;
+    }
+
     boolean exit_status;
+
 
     public boolean isExit_status() {
         return exit_status;

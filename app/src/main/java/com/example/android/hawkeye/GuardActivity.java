@@ -1,12 +1,15 @@
 package com.example.android.hawkeye;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,7 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class GuardActivity extends AppCompatActivity {
+public class GuardActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
     private FirebaseDatabase mFirebaseDatabase3;
     private DatabaseReference mDatabaseReference3;
@@ -49,18 +52,26 @@ public class GuardActivity extends AppCompatActivity {
         cid.setText(id);
         vel=(Button)findViewById(R.id.entry_log);
         lo=(Button)findViewById(R.id.logout);
-        ra=(Button)findViewById(R.id.raise_alarm);
+        ra=(Button)findViewById(R.id.raise);
         fv=(Button)findViewById(R.id.forced_validate);
-
 
         utilFunctions= new UtilFunctions();
         mFirebaseDatabase3=FirebaseDatabase.getInstance();
         mDatabaseReference3=mFirebaseDatabase3.getReference().child("clients");
 
+
+//        ra.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Toast.makeText(getApplicationContext(), "Cliked r button", Toast.LENGTH_LONG).show();
+//
+//            }
+//        });
+
         fv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent= new Intent(GuardActivity.this,EntryLogActivity.class);
+                Intent intent= new Intent(GuardActivity.this,ForcedValidate.class);
                 intent.putExtra("ID",id);
                 startActivity(intent);
             }
@@ -75,12 +86,12 @@ public class GuardActivity extends AppCompatActivity {
             }
         });
 
-        ra.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
+//        ra.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//        });
 
         lo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,6 +139,43 @@ public class GuardActivity extends AppCompatActivity {
             }
         });
     }
+
+    void showPopUp(View v){
+
+        PopupMenu popupMenu = new PopupMenu(this,v);
+        popupMenu.setOnMenuItemClickListener(this );
+        popupMenu.inflate(R.menu.pop_raise_alarm);
+        popupMenu.show();
+
+
+    }
+    @Override
+    public boolean onMenuItemClick(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case R.id.callguard: {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + "9820188402"));
+                startActivity(intent);
+
+            }
+            break;
+            case R.id.calladmin: {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + "9820188402"));
+                startActivity(intent);
+
+            }
+            break;
+            case R.id.callpolice: {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + "9820188402"));
+                startActivity(intent);
+            }
+            break;
+        }
+        return true;
+    }
+
     @Override
     public void onBackPressed(){
 
@@ -151,4 +199,5 @@ public class GuardActivity extends AppCompatActivity {
         //intent.putExtra("KEY",key);
         startActivity(intent);
     }
+
 }

@@ -17,6 +17,7 @@ public class RecyclerViewAdapterLog extends  RecyclerView.Adapter<RecyclerViewAd
 
     private ArrayList<EntryLog> el;
     Context context;
+   // List<String> dt;
     Date d;
 
 
@@ -50,6 +51,24 @@ public class RecyclerViewAdapterLog extends  RecyclerView.Adapter<RecyclerViewAd
         calendar.setTime(d);
 
 
+        String dt="";
+        String t="";
+        String datetime = el.get(i).getDatetime();
+
+        int f=1;
+        for(int j=0;j<datetime.length();j++){
+
+            if(datetime.charAt(j)=='|'){
+                f=0;
+            }
+            else if(f==1) {
+                dt = dt + datetime.charAt(j);
+            }
+            else{
+                t = t + datetime.charAt(j);
+            }
+        }
+
         Log.d("TAG","The value of tuid is:"+el.get(i).getUid());
 
         int day=calendar.get(Calendar.DAY_OF_MONTH);
@@ -61,11 +80,13 @@ public class RecyclerViewAdapterLog extends  RecyclerView.Adapter<RecyclerViewAd
 
         int minute= calendar.get(Calendar.MINUTE);
 
-        Log.d("TAG","The current date is:"+day+"/"+month+"/"+year);
 
-        myViewHolder.adate.setText(day+"/"+month+"/"+year);
 
-        myViewHolder.atime.setText(hour+":"+minute);
+        Log.d("TAG","The current date is:"+el.get(i).getDatetime());
+
+        myViewHolder.adate.setText(dt);
+
+        myViewHolder.atime.setText(t);
 
         myViewHolder.desc.setText(el.get(i).getDsc());
 

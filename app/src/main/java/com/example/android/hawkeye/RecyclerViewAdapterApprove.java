@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,7 +84,7 @@ public class RecyclerViewAdapterApprove extends  RecyclerView.Adapter<RecyclerVi
                             }
                         }
 
-                        Intent intent = new Intent(context,AdminActivity.class);
+                        Intent intent = new Intent(context,UserLogActivity.class);
                         intent.putExtra("ID",cl.get(i).getId());
 
                         Toast.makeText(context,"Debarred the user",Toast.LENGTH_SHORT).show();
@@ -118,19 +119,34 @@ public class RecyclerViewAdapterApprove extends  RecyclerView.Adapter<RecyclerVi
 
                        // dataSnapshot.getRef().child("cl_status").setValue(true);
 
+                        boolean f;
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             if (cl.get(i).getId().equals((String) snapshot.child("id").getValue())) {
-                                snapshot.child("cl_status").getRef().setValue(true);
+
+                                Log.d("TAG","ARSDTFYGUHIJO "+(Boolean) snapshot.child("cl_status").getValue());
+                                if(cl.get(i).getCl_status()){
+                                    Toast.makeText(context,"Already Approved",Toast.LENGTH_SHORT).show();
+                                }
+                                else {
+                                    snapshot.child("cl_status").getRef().setValue(true);
+                                    Intent intent = new Intent(context,UserLogActivity.class);
+                                    intent.putExtra("ID",cl.get(i).getId());
+
+                                    Toast.makeText(context,"Approved user",Toast.LENGTH_SHORT).show();
+
+                                    context.startActivity(intent);
+
+                                }
                             }
                         }
 
-                        Intent intent = new Intent(context,AdminActivity.class);
-                        intent.putExtra("ID",cl.get(i).getId());
-
-                        Toast.makeText(context,"Approved user",Toast.LENGTH_SHORT).show();
-
-
-                        context.startActivity(intent);
+//                        Intent intent = new Intent(context,UserLogActivity.class);
+//                        intent.putExtra("ID",cl.get(i).getId());
+//
+//                        Toast.makeText(context,"Approved user",Toast.LENGTH_SHORT).show();
+//
+//
+//                        context.startActivity(intent);
 
                     }
 

@@ -1,6 +1,7 @@
 package com.example.android.hawkeye;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -20,7 +21,7 @@ public class AdminActivity extends AppCompatActivity {
 
     private FirebaseDatabase mFirebaseDatabase4;
     private DatabaseReference mDatabaseReference4;
-    private DatabaseReference mDatabaseReference6;
+    private DatabaseReference mDatabaseReference6, mDatabaseReference5;
     private DatabaseReference mPushDatabaseReference4;
 
     UtilFunctions utilFunctions;
@@ -35,37 +36,108 @@ public class AdminActivity extends AppCompatActivity {
     TextView cid;
     Button lgt;
     Button vel;
-    Button appruser;
+    Button appruser, val, addgrd;
 
     String id;
     String si;
+
+    boolean fd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        try{
+        try {
             this.getSupportActionBar().hide();
+        } catch (NullPointerException e) {
         }
-        catch(NullPointerException e){}
         setContentView(R.layout.activity_admin);
-        cid=(TextView)findViewById(R.id.client_id);
-        lgt=(Button)findViewById(R.id.logout);
-        vel=(Button)findViewById(R.id.entrylog);
-        appruser=(Button)findViewById(R.id.approve_user);
-        id=getIntent().getStringExtra("ID");
-        //si=getIntent().getStringExtra("SOCIETY");
-        a_vehicle=(Button)findViewById(R.id.add_vehicle);
-        a_guest_vehicle=(Button)findViewById(R.id.add_guest);
 
-        utilFunctions= new UtilFunctions();
-        mFirebaseDatabase4=FirebaseDatabase.getInstance();
-        mDatabaseReference4=mFirebaseDatabase4.getReference().child("clients");
-        mDatabaseReference6=mFirebaseDatabase4.getReference().child("clients");
+        val = (Button) findViewById(R.id.validate);
+        addgrd = (Button) findViewById(R.id.addgrd);
+
+        cid = (TextView) findViewById(R.id.client_id);
+        lgt = (Button) findViewById(R.id.logout);
+        vel = (Button) findViewById(R.id.entrylog);
+        appruser = (Button) findViewById(R.id.approve_user);
+        id = getIntent().getStringExtra("ID");
+        //si=getIntent().getStringExtra("SOCIETY");
+        a_vehicle = (Button) findViewById(R.id.add_vehicle);
+        a_guest_vehicle = (Button) findViewById(R.id.add_guest);
+
+        utilFunctions = new UtilFunctions();
+        mFirebaseDatabase4 = FirebaseDatabase.getInstance();
+        mDatabaseReference4 = mFirebaseDatabase4.getReference().child("clients");
+        mDatabaseReference6 = mFirebaseDatabase4.getReference().child("clients");
+        mDatabaseReference5 = mFirebaseDatabase4.getReference().child("entrylog");
+
+        fd = false;
+
+        addgrd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String user_key = displayFirebaseRegId();
+                Intent i = new Intent(AdminActivity.this, SignUp.class);
+                i.putExtra("Desc", "guard");
+
+                i.putExtra("userkey", user_key);
+                startActivity(i);
+            }
+        });
+
+        val.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Intent intent = new Intent(UserActivity.this,Validate.class);
+//                intent.putExtra("ID",id);
+                mDatabaseReference5.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            Log.d("TAG", "gjvvhjkj " + (Boolean) snapshot.child("exit_status").getValue());
+                            if (snapshot.child("uid").exists() && (!(Boolean) snapshot.child("exit_status").getValue()) && id.equals((String) snapshot.child("uid").getValue())) {
+                                // email_addr=snapshot.child("email").getValue().toString();
+                                // si = (String)snapshot.child("society_info").getValue();
+                                //  Log.d("SET","SEtv the value of si"+si);
+                                fd = true;
+                                break;
+                            }
+                        }
+
+                        if (fd) {
+                            Intent intent = new Intent(AdminActivity.this, Validate.class);
+                            intent.putExtra("ID", id);
+                            startActivity(intent);
+
+                        } else {
+                            Toast.makeText(AdminActivity.this, "You do not have any invalid exits", Toast.LENGTH_SHORT).show();
+
+                        }
+//                        Log.d("SEN","Sending si"+si);
+//                        intent.putExtra("SOCIETY",si);
+//                        startActivity(intent);
+
+                    }
+
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+            }
+        });
+
         vel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent= new Intent(AdminActivity.this,EntryLogActivity.class);
-                intent.putExtra("ID",id);
+                Intent intent = new Intent(AdminActivity.this, EntryLogActivity.class);
+                intent.putExtra("ID", id);
                 startActivity(intent);
+
             }
         });
 
@@ -73,8 +145,8 @@ public class AdminActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                final Intent intent = new Intent(AdminActivity.this,MyVehiclesUser.class);
-                intent.putExtra("ID",id);
+                final Intent intent = new Intent(AdminActivity.this, MyVehiclesUser.class);
+                intent.putExtra("ID", id);
 
                 mDatabaseReference6.addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -82,17 +154,17 @@ public class AdminActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            Log.d("TAG",id+"Cpomap"+(String)snapshot.child("id").getValue());
-                            if(id.equals((String)snapshot.child("id").getValue())){
+                            Log.d("TAG", id + "Cpomap" + (String) snapshot.child("id").getValue());
+                            if (id.equals((String) snapshot.child("id").getValue())) {
                                 // email_addr=snapshot.child("email").getValue().toString();
-                                si = (String)snapshot.child("society_info").getValue();
-                                Log.d("SET","SEtv the value of si"+si);
+                                si = (String) snapshot.child("society_info").getValue();
+                                Log.d("SET", "SEtv the value of si" + si);
                                 break;
                             }
                         }
 
-                        Log.d("SEN","Sending guest si"+si);
-                        intent.putExtra("SOCIETY",si);
+                        Log.d("SEN", "Sending guest si" + si);
+                        intent.putExtra("SOCIETY", si);
                         startActivity(intent);
 
                     }
@@ -111,26 +183,26 @@ public class AdminActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                final Intent intent = new Intent(AdminActivity.this,MyGuest.class);
-                intent.putExtra("ID",id);
-
+                final Intent intent = new Intent(AdminActivity.this, MyGuest.class);
+                intent.putExtra("ID", id);
+               // startActivity(intent);
                 mDatabaseReference6.addListenerForSingleValueEvent(new ValueEventListener() {
 
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            Log.d("TAG",id+"Cpomap"+(String)snapshot.child("id").getValue());
-                            if(id.equals((String)snapshot.child("id").getValue())){
+                            Log.d("TAG", id + "Cpomap" + (String) snapshot.child("id").getValue());
+                            if (id.equals((String) snapshot.child("id").getValue())) {
                                 // email_addr=snapshot.child("email").getValue().toString();
-                                si = (String)snapshot.child("society_info").getValue();
-                                Log.d("SET","SEtv the value of si"+si);
+                                si = (String) snapshot.child("society_info").getValue();
+                                Log.d("SET", "SEtv the value of si" + si);
                                 break;
                             }
                         }
 
-                        Log.d("SEN","Sending guest si"+si);
-                        intent.putExtra("SOCIETY",si);
+                        Log.d("SEN", "Sending guest si" + si);
+                        intent.putExtra("SOCIETY", si);
                         startActivity(intent);
 
                     }
@@ -149,11 +221,11 @@ public class AdminActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(AdminActivity.this,MainActivity.class);
+                final Intent intent = new Intent(AdminActivity.this, MainActivity.class);
 
-                SaveSharedPreference.setUserName(AdminActivity.this,"");
+                SaveSharedPreference.setUserName(AdminActivity.this, "");
 
-                intent.putExtra("ID",id);
+                intent.putExtra("ID", id);
 
 
                 mDatabaseReference4.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -162,9 +234,9 @@ public class AdminActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            Log.d("TAG",id+"Cpomap"+(String)snapshot.child("id").getValue());
-                            if(id.equals((String)snapshot.child("id").getValue())){
-                                email_addr=snapshot.child("email").getValue().toString();
+                            Log.d("TAG", id + "Cpomap" + (String) snapshot.child("id").getValue());
+                            if (id.equals((String) snapshot.child("id").getValue())) {
+                                email_addr = snapshot.child("email").getValue().toString();
 
                                 Toast.makeText(AdminActivity.this, "Found User", Toast.LENGTH_LONG).show();
 
@@ -173,6 +245,7 @@ public class AdminActivity extends AppCompatActivity {
                                 mPushDatabaseReference4 = mFirebaseDatabase4.getReference().child("clients");
                                 mPushDatabaseReference4.child(key).child("user_key").setValue("");
 
+                                startActivity(intent);
                                 break;
                             }
                         }
@@ -184,18 +257,15 @@ public class AdminActivity extends AppCompatActivity {
 
                     }
                 });
-
-
-
-                startActivity(intent);
             }
         });
+
 
         appruser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(AdminActivity.this,UserLogActivity.class);
-                i.putExtra("ID",id);
+                Intent i = new Intent(AdminActivity.this, UserLogActivity.class);
+                i.putExtra("ID", id);
                 startActivity(i);
             }
         });
@@ -204,27 +274,41 @@ public class AdminActivity extends AppCompatActivity {
 
     }
 
+
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
 
         Toast.makeText(AdminActivity.this, "Bye", Toast.LENGTH_SHORT).show();
 
 //        mFirebaseDatabase = FirebaseDatabase.getInstance();
 //        mDatabaseReference = mFirebaseDatabase.getReference().child("clients");
 
-        Log.d("TAG","Going back");
+        Log.d("TAG", "Going back");
 
 
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_HOME);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-        Log.d("TAG","Going back");
+        Log.d("TAG", "Going back");
 
         Toast.makeText(AdminActivity.this, "Bye", Toast.LENGTH_SHORT).show();
 
-        intent.putExtra("ID",id);
+        intent.putExtra("ID", id);
         //intent.putExtra("KEY",key);
         startActivity(intent);
+    }
+
+    private String displayFirebaseRegId() {
+        SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
+        String regId = pref.getString("regId", null);
+
+        //Log.e(TAG, "Firebase reg id: " + regId);
+
+        //if (!TextUtils.isEmpty(regId))
+            //txtRegId.setText("Firebase Reg Id: " + regId);
+        //else
+        //    txtRegId.setText("Firebase Reg Id is not received yet!");
+        return regId;
     }
 }

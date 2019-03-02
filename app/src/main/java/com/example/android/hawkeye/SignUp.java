@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -18,7 +19,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -29,6 +37,8 @@ public class SignUp extends AppCompatActivity {
     EditText sname;
     EditText pword;
     EditText pnum;
+    private FirebaseDatabase mFirebaseDatabase,mFirebaseDatabase2;
+    private DatabaseReference mDatabaseReference,mDatabaseReference2;
 
     Client client;
     protected String fname;
@@ -49,11 +59,13 @@ public class SignUp extends AppCompatActivity {
     RadioGroup radioGroup;
     DataBaseHelper db;
     UtilFunctions utilFunctions;
-    String [] names;
+    ArrayList<String> names;
     String id;
     String userkey;
     ImageButton btn;
     Button sae;
+    String []names2;
+    String []names3={"cytvuybn","bnjmlk,"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +79,49 @@ public class SignUp extends AppCompatActivity {
         userkey=getIntent().getStringExtra("userkey");
         db= new DataBaseHelper();
 
+        names=new ArrayList<>();
+        mFirebaseDatabase=FirebaseDatabase.getInstance();
+        mDatabaseReference=mFirebaseDatabase.getReference().child("Societies");
+
+        mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //int j=0;
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    names.add(((String)snapshot.child("societyName").getValue()));
+                    Log.d("TAG","ADDEd"+(String)snapshot.child("societyName").getValue());
+                    //Log.d("TAG","ADD"+n);
+
+                    //j++;
+                }
+
+                Log.d("TAG","ActHE SIZE"+names.size());
+                names2= new String[names.size()];
+                for (int j=0;j<names.size();j++)
+                {
+                    names2[j]=names.get(j);
+                    Log.d("TAG","Acjvkb;'hjkd"+names2[j]);
+                }
+
+                society_name=(Spinner)findViewById(R.id.societynames);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(SignUp.this,R.layout.support_simple_spinner_dropdown_item,names2);
+                society_name.setAdapter(adapter);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        //Log.d("TAG","ActHE SIZE"+names2.length);
+//        names2= new String[names.size()];
+//        for (int j=0;j<names.size();j++)
+//        {
+//            names2[j]=names.get(j);
+//            Log.d("TAG","Acjvkb;'hjkd"+names2[j]);
+//        }
+
 
         sae=findViewById(R.id.appr_email);
         btn=findViewById(R.id.back_button);
@@ -74,7 +129,9 @@ public class SignUp extends AppCompatActivity {
         submit=(Button)findViewById(R.id.submit);
         utilFunctions=new UtilFunctions();
         dob=(EditText)findViewById(R.id.dob);
-        names=new String[]{"Rambharose,Saraf Lane","Raj Apartment,Mira Road","Western Heights,DN Nagar","Rambharose,Saraf","Rambharose,Saraf","Rambharose,Saraf","Rambharose,Saraf"};
+
+
+
 
 
         btn.setOnClickListener(new View.OnClickListener() {
@@ -122,19 +179,23 @@ public class SignUp extends AppCompatActivity {
         info=(TextView)findViewById(R.id.info);
         info.setText("Registering as "+desc);
         society_name=(Spinner)findViewById(R.id.societynames);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,names);
-        society_name.setAdapter(adapter);
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,names3);
+//        society_name.setAdapter(adapter);
 
         if(desc.equals("admin")){
             society_name.setMinimumHeight(0);
             society_name.setMinimumWidth(0);
             society_name.setAlpha(0);
+
         }
         else{
             sname=(EditText)findViewById(R.id.sname);
             sname.setHeight(0);
             sname.setAlpha(0);
             sname.setWidth(0);
+            sae.setMinimumHeight(0);
+            sae.setMinimumWidth(0);
+            sae.setAlpha(0);
         }
 
         submit.setOnClickListener(new View.OnClickListener() {
@@ -192,7 +253,7 @@ public class SignUp extends AppCompatActivity {
                 }
                 if(desc.equals("guard")){
                     id=utilFunctions.generate_id("GRD");
-                    client = new Client(fname,lname,email,gender, raddress, aadharno,DOB,society_info,password,desc,pno,id,userkey,false);
+                    client = new Client(fname,lname,email,gender, raddress, aadharno,DOB,society_info,password,desc,pno,id,userkey,true);
                     db.createClient(client);
 
                     Toast.makeText(SignUp.this,"Guard Account created Successfully",Toast.LENGTH_SHORT).show();

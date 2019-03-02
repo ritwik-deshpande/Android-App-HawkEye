@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:gravity="center_horizontal"
     android:background="@drawable/gradient"
-    tools:context=".Validate">
+    tools:context=".RentPark">
     <ImageButton
         android:id="@+id/back_button"
         android:layout_width="35dp"
@@ -28,8 +28,19 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
+    <TextView
+        android:id="@+id/sname"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:textColor="#ffffff"
+        android:text="Nsthasni Heights"
+        android:textSize="40sp"
+        />
+
 
     <LinearLayout
+        android:layout_marginTop="20dp"
         android:orientation="horizontal"
         android:gravity="center"
         android:layout_width="match_parent"
@@ -40,17 +51,43 @@
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:textColor="#ffffff"
-            android:text="User ID:"
-            android:textSize="40sp"
+            android:text="No of Parking Slots:"
+            android:textSize="30sp"
             />
 
         <TextView
-            android:id="@+id/c_id"
+            android:id="@+id/p_slot"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:textColor="#ffffff"
-            android:text="GD83924"
-            android:textSize="40sp"
+            android:text="15"
+            android:textSize="30sp"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/txthh"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:textColor="#ffffff"
+            android:text="Cost of Parking:"
+            android:textSize="30sp"
+            />
+
+        <TextView
+            android:id="@+id/cost"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:textColor="#ffffff"
+            android:text="15"
+            android:textSize="30sp"
             />
     </LinearLayout>
 
@@ -61,26 +98,12 @@
         android:layout_marginLeft="10dp"
         android:padding="10dp"
         android:layout_gravity="center"
-        android:id="@+id/accept"
+        android:id="@+id/book"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:textSize="20sp"
         android:background="@drawable/mybutton"
-        android:text="VALIDATE"
-    />
-    <Button
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
-        android:padding="10dp"
-        android:layout_gravity="center"
-        android:id="@+id/deny"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:textSize="20sp"
-        android:onClick="showPopUp"
-        android:background="@drawable/mybutton"
-        android:text="DENY"
+        android:text="BOOK"
         />
 
 

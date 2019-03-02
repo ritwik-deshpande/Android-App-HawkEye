@@ -78,7 +78,7 @@ public class RecyclerViewAdapterGuest extends RecyclerView.Adapter<RecyclerViewA
 
         Log.d("TAG","The current date is:"+day+"/"+month+"/"+year);
 
-        myViewHolder.ad.setText(day+"/"+month+"/"+year);
+        myViewHolder.ad.setText(vehicles.get(i).getSdate());
 
         rn=vehicles.get(i).getReg_number();
         id=vehicles.get(i).getUserid();
@@ -97,10 +97,10 @@ public class RecyclerViewAdapterGuest extends RecyclerView.Adapter<RecyclerViewA
                                 snapshot.getRef().removeValue();
                             }
                         }
-                        Intent i = new Intent(context,UserActivity.class);
+                        Intent i = new Intent(context,MyGuest.class);
                         i.putExtra("ID",id);
 
-                        Toast.makeText(context,"Removed your vehicle from db",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context,"Removed your guest vehicle from db",Toast.LENGTH_SHORT).show();
 
 
                         context.startActivity(i);

@@ -78,10 +78,11 @@
             <Button
                 android:layout_marginTop="30dp"
                 android:layout_gravity="center"
-                android:id="@+id/raise_alarm"
+                android:id="@+id/raise"
                 android:layout_width="250dp"
                 android:layout_height="40dp"
                 android:textSize="20sp"
+                android:onClick="showPopUp"
                 android:background="@drawable/mybutton"
                 android:text="RAISE ALARM"
                 />
