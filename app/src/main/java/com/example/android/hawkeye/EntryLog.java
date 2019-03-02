@@ -8,6 +8,15 @@ public class EntryLog {
     Date timestamp;
     String dsc;
     String timestamp_dsc;
+    boolean exit_status;
+
+    public boolean isExit_status() {
+        return exit_status;
+    }
+
+    public void setExit_status(boolean exit_status) {
+        this.exit_status = exit_status;
+    }
 
     public String getTimestamp_dsc() {
         return timestamp_dsc;
@@ -21,12 +30,13 @@ public class EntryLog {
 
     }
 
-    public EntryLog(String rnum, String uid, Date timestamp, String dsc,String timestamp_dsc) {
+    public EntryLog(String rnum, String uid, Date timestamp, String dsc,String timestamp_dsc,boolean exit_status) {
         this.rnum = rnum;
         this.uid = uid;
         this.timestamp = timestamp;
         this.dsc = dsc;
         this.timestamp_dsc=timestamp_dsc;
+        this.exit_status=exit_status;
     }
 
     public String getRnum() {

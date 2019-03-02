@@ -46,12 +46,14 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     String phone_number;
     String password;
     String desc;
+    String message;
     String id;
     String user_key;
     String email_addr;
     String key;
     String key2;
     String si;
+    String nty;
     UtilFunctions utilFunctions;
     boolean found;
     boolean approve;
@@ -72,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
 
         id=getIntent().getStringExtra("ID");
-
+        nty=getIntent().getStringExtra("NOTIFY");
 
         utilFunctions= new UtilFunctions();
         forgotpassword=(TextView)findViewById(R.id.fp);
@@ -101,32 +103,78 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 //            startActivity(intent);
 //        }
 
+        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
 
+                // checking for type intent filter
+                if (intent.getAction().equals(Config.REGISTRATION_COMPLETE)) {
+                    // gcm successfully registered
+                    // now subscribe to `global` topic to receive app wide notifications
+                    FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
+
+                    user_key=displayFirebaseRegId();
+
+                } else if (intent.getAction().equals(Config.PUSH_NOTIFICATION)) {
+                    // new push notification is received
+
+                    message = intent.getStringExtra("message");
+                    nty=intent.getStringExtra("NOTIFY");
+                    Toast.makeText(getApplicationContext(), "Push notification: " + message, Toast.LENGTH_LONG).show();
+                    Log.d("TAG","Tdgxf    xcvbn   "+message);
+                    txtMessage.setText(message);
+                }
+            }
+        };
+
+
+        Log.d("TAG","THe notification recieved is :"+nty+"    xcvbn   "+message);
 
 
 
         String sid=SaveSharedPreference.getUserName(MainActivity.this);
         if(sid.length() > 0)
         {
-            if(sid.substring(0,3).equals("USR")){
-                Intent intent = new Intent(MainActivity.this,UserActivity.class);
-                intent.putExtra("ID",sid);
-                startActivity(intent);
-            }
-            if(sid.substring(0,3).equals("GRD")){
-                Intent intent = new Intent(MainActivity.this,GuardActivity.class);
-                intent.putExtra("ID",sid);
-                startActivity(intent);
+            if(nty==null) {
 
-            }
-            if(sid.substring(0,3).equals("ADM")){
-                Intent intent = new Intent(MainActivity.this,AdminActivity.class);
-                intent.putExtra("ID",sid);
-                startActivity(intent);
+                if (sid.substring(0, 3).equals("USR")) {
+                    Intent intent = new Intent(MainActivity.this, UserActivity.class);
+                    intent.putExtra("ID", sid);
+                    startActivity(intent);
+                }
+                if (sid.substring(0, 3).equals("GRD")) {
+                    Intent intent = new Intent(MainActivity.this, GuardActivity.class);
+                    intent.putExtra("ID", sid);
+                    startActivity(intent);
 
+                }
+                if (sid.substring(0, 3).equals("ADM")) {
+                    Intent intent = new Intent(MainActivity.this, AdminActivity.class);
+                    intent.putExtra("ID", sid);
+                    startActivity(intent);
+
+                }
+            }
+            else{
+                if (sid.substring(0, 3).equals("USR")) {
+                    Intent intent = new Intent(MainActivity.this, Validate.class);
+                    intent.putExtra("ID", sid);
+                    startActivity(intent);
+                }
+                if (sid.substring(0, 3).equals("GRD")) {
+                    Intent intent = new Intent(MainActivity.this, GuardActivity.class);
+                    intent.putExtra("ID", sid);
+                    startActivity(intent);
+
+                }
+                if (sid.substring(0, 3).equals("ADM")) {
+                    Intent intent = new Intent(MainActivity.this, Validate.class);
+                    intent.putExtra("ID", sid);
+                    startActivity(intent);
+
+                }
             }
         }
-
 
 
         if(id!=null) {
@@ -148,29 +196,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
 
 
-        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
 
-                // checking for type intent filter
-                if (intent.getAction().equals(Config.REGISTRATION_COMPLETE)) {
-                    // gcm successfully registered
-                    // now subscribe to `global` topic to receive app wide notifications
-                    FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
-
-                    user_key=displayFirebaseRegId();
-
-                } else if (intent.getAction().equals(Config.PUSH_NOTIFICATION)) {
-                    // new push notification is received
-
-                    String message = intent.getStringExtra("message");
-
-                    Toast.makeText(getApplicationContext(), "Push notification: " + message, Toast.LENGTH_LONG).show();
-
-                    txtMessage.setText(message);
-                }
-            }
-        };
 
         user_key=displayFirebaseRegId();
 

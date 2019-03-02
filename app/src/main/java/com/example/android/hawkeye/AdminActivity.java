@@ -20,12 +20,16 @@ public class AdminActivity extends AppCompatActivity {
 
     private FirebaseDatabase mFirebaseDatabase4;
     private DatabaseReference mDatabaseReference4;
+    private DatabaseReference mDatabaseReference6;
     private DatabaseReference mPushDatabaseReference4;
 
     UtilFunctions utilFunctions;
 
     String email_addr;
     String key;
+
+    Button a_vehicle;
+    Button a_guest_vehicle;
 
 
     TextView cid;
@@ -34,6 +38,7 @@ public class AdminActivity extends AppCompatActivity {
     Button appruser;
 
     String id;
+    String si;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,17 +52,96 @@ public class AdminActivity extends AppCompatActivity {
         vel=(Button)findViewById(R.id.entrylog);
         appruser=(Button)findViewById(R.id.approve_user);
         id=getIntent().getStringExtra("ID");
+        //si=getIntent().getStringExtra("SOCIETY");
+        a_vehicle=(Button)findViewById(R.id.add_vehicle);
+        a_guest_vehicle=(Button)findViewById(R.id.add_guest);
 
         utilFunctions= new UtilFunctions();
         mFirebaseDatabase4=FirebaseDatabase.getInstance();
         mDatabaseReference4=mFirebaseDatabase4.getReference().child("clients");
-
+        mDatabaseReference6=mFirebaseDatabase4.getReference().child("clients");
         vel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent= new Intent(AdminActivity.this,EntryLogActivity.class);
                 intent.putExtra("ID",id);
                 startActivity(intent);
+            }
+        });
+
+        a_vehicle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                final Intent intent = new Intent(AdminActivity.this,MyVehiclesUser.class);
+                intent.putExtra("ID",id);
+
+                mDatabaseReference6.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            Log.d("TAG",id+"Cpomap"+(String)snapshot.child("id").getValue());
+                            if(id.equals((String)snapshot.child("id").getValue())){
+                                // email_addr=snapshot.child("email").getValue().toString();
+                                si = (String)snapshot.child("society_info").getValue();
+                                Log.d("SET","SEtv the value of si"+si);
+                                break;
+                            }
+                        }
+
+                        Log.d("SEN","Sending guest si"+si);
+                        intent.putExtra("SOCIETY",si);
+                        startActivity(intent);
+
+                    }
+
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+            }
+        });
+
+        a_guest_vehicle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                final Intent intent = new Intent(AdminActivity.this,MyGuest.class);
+                intent.putExtra("ID",id);
+
+                mDatabaseReference6.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            Log.d("TAG",id+"Cpomap"+(String)snapshot.child("id").getValue());
+                            if(id.equals((String)snapshot.child("id").getValue())){
+                                // email_addr=snapshot.child("email").getValue().toString();
+                                si = (String)snapshot.child("society_info").getValue();
+                                Log.d("SET","SEtv the value of si"+si);
+                                break;
+                            }
+                        }
+
+                        Log.d("SEN","Sending guest si"+si);
+                        intent.putExtra("SOCIETY",si);
+                        startActivity(intent);
+
+                    }
+
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
             }
         });
 

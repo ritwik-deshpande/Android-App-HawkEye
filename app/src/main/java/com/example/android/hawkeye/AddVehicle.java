@@ -74,12 +74,22 @@ public class AddVehicle extends AppCompatActivity  implements PopupMenu.OnMenuIt
                 Log.d("TAG","The si is"+si);
                 db.createVehicle(new Vehicle(id,vehicle_company,vehicle_model,colour,reg_number,si));
 
-                Intent intent=new Intent(AddVehicle.this,UserActivity.class);
-                intent.putExtra("ID",id);
-                intent.putExtra("SOCIETY",si);
-                Toast.makeText(AddVehicle.this,"Added your vehicle to db successfully",Toast.LENGTH_SHORT).show();
+                if(id.substring(0,3).equals("USR")) {
+                    Intent intent = new Intent(AddVehicle.this, UserActivity.class);
+                    intent.putExtra("ID", id);
+                    intent.putExtra("SOCIETY", si);
+                    Toast.makeText(AddVehicle.this, "Added your vehicle to db successfully", Toast.LENGTH_SHORT).show();
 
-                startActivity(intent);
+                    startActivity(intent);
+                }
+                if(id.substring(0,3).equals("ADM")){
+                    Intent intent = new Intent(AddVehicle.this, UserActivity.class);
+                    intent.putExtra("ID", id);
+                    intent.putExtra("SOCIETY", si);
+                    Toast.makeText(AddVehicle.this, "Added your vehicle to db successfully", Toast.LENGTH_SHORT).show();
+
+                    startActivity(intent);
+                }
             }
         });
 

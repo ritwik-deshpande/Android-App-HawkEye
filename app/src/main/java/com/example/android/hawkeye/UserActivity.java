@@ -19,7 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 public class UserActivity extends AppCompatActivity {
 
     private FirebaseDatabase mFirebaseDatabase2;
-    private DatabaseReference mDatabaseReference2,mDatabaseReference3,mDatabaseReference4;
+    private DatabaseReference mDatabaseReference2,mDatabaseReference3,mDatabaseReference4,mDatabaseReference5;
     private DatabaseReference mPushDatabaseReference2;
     UtilFunctions utilFunctions;
     TextView cid;
@@ -28,6 +28,7 @@ public class UserActivity extends AppCompatActivity {
     Button av;
     Button agv;
     Button logout;
+    Button val;
     String email_addr;
     String key;
     @Override
@@ -48,13 +49,20 @@ public class UserActivity extends AppCompatActivity {
         av=(Button)findViewById(R.id.add_vehicle);
         agv=(Button)findViewById(R.id.add_guest);
         logout=(Button)findViewById(R.id.logout);
+        val=(Button)findViewById(R.id.validate);
         mFirebaseDatabase2=FirebaseDatabase.getInstance();
         mDatabaseReference2=mFirebaseDatabase2.getReference().child("clients");
         mDatabaseReference3=mFirebaseDatabase2.getReference().child("clients");
         mDatabaseReference4=mFirebaseDatabase2.getReference().child("clients");
+        mDatabaseReference5=mFirebaseDatabase2.getReference().child("enty_log");
 
-
-
+        val.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(UserActivity.this,Validate.class);
+                intent.putExtra("ID",id);
+            }
+        });
 
         av.setOnClickListener(new View.OnClickListener() {
             @Override

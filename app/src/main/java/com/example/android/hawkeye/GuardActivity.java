@@ -29,6 +29,7 @@ public class GuardActivity extends AppCompatActivity {
     Button vel;
     Button ra;
     Button lo;
+
     String id;
 
     UtilFunctions utilFunctions;

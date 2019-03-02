@@ -99,12 +99,24 @@ public class AddGuestActivity extends AppCompatActivity {
 
                 db.createGuestVehicle(new vehicle_guest(id,vehicle_company,vehicle_model,colour,reg_number,si,dt,5));
 
-                Intent intent=new Intent(AddGuestActivity.this,UserActivity.class);
-                intent.putExtra("ID",id);
-                intent.putExtra("SOCIETY",si);
-                Toast.makeText(AddGuestActivity.this,"Added your Guest vehicle to db successfully",Toast.LENGTH_SHORT).show();
+                if(id.substring(0,3).equals("USR"))
+                {
+                    Intent intent = new Intent(AddGuestActivity.this, UserActivity.class);
+                    intent.putExtra("ID", id);
+                    intent.putExtra("SOCIETY", si);
+                    Toast.makeText(AddGuestActivity.this, "Added your Guest vehicle to db successfully", Toast.LENGTH_SHORT).show();
 
-                startActivity(intent);
+                    startActivity(intent);
+                }
+                if(id.substring(0,3).equals("ADM"))
+                {
+                    Intent intent = new Intent(AddGuestActivity.this, AdminActivity.class);
+                    intent.putExtra("ID", id);
+                    intent.putExtra("SOCIETY", si);
+                    Toast.makeText(AddGuestActivity.this, "Added your Guest vehicle to db successfully", Toast.LENGTH_SHORT).show();
+
+                    startActivity(intent);
+                }
             }
         });
     }

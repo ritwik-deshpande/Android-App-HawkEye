@@ -120,50 +120,13 @@
                         android:layout_marginRight="10dp"
                         android:padding="10dp"
                         android:layout_gravity="center"
-                        android:id="@+id/login_buton"
+                        android:id="@+id/validate"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="70dp"
                         android:textSize="20sp"
                         android:background="@drawable/mybutton"
-                        android:text="VIEW ENTRY LOG"
-                        />
-
-                    <Button
-                        android:layout_marginRight="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:padding="10dp"
-                        android:layout_gravity="center"
-                        android:id="@+id/logn"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="70dp"
-                        android:textSize="20sp"
-                        android:background="@drawable/mybutton"
-                        android:text="VIEW ENTRY LOG"
-                        />
-
-
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_marginTop="20dp"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <Button
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:padding="10dp"
-                        android:layout_gravity="center"
-                        android:id="@+id/logion"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="70dp"
-                        android:textSize="20sp"
-                        android:background="@drawable/mybutton"
-                        android:text="VIEW ENTRY LOG"
+                        android:text="VALIDATE EXIT"
                         />
 
                     <Button
@@ -184,6 +147,19 @@
 
                 </LinearLayout>
 
+                <!--<Button-->
+                    <!--android:layout_marginTop="20dp"-->
+                    <!--android:layout_marginRight="10dp"-->
+                    <!--android:layout_marginLeft="10dp"-->
+                    <!--android:padding="10dp"-->
+                    <!--android:layout_gravity="center"-->
+                    <!--android:id="@+id/logout"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="70dp"-->
+                    <!--android:textSize="20sp"-->
+                    <!--android:background="@drawable/mybutton"-->
+                    <!--android:text="LOGOUT"-->
+                    <!--/>-->
 
             </LinearLayout>
         </ScrollView>

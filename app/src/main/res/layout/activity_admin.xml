@@ -112,13 +112,13 @@
                         android:layout_marginRight="10dp"
                         android:padding="10dp"
                         android:layout_gravity="center"
-                        android:id="@+id/login_button"
+                        android:id="@+id/add_vehicle"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="70dp"
                         android:textSize="20sp"
                         android:background="@drawable/mybutton"
-                        android:text="VIEW ENTRY LOG"
+                        android:text="ADD VEHICLE"
                         />
 
                     <Button
@@ -126,13 +126,13 @@
                         android:layout_marginLeft="10dp"
                         android:padding="10dp"
                         android:layout_gravity="center"
-                        android:id="@+id/login_bton"
+                        android:id="@+id/add_guest"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="70dp"
                         android:textSize="20sp"
                         android:background="@drawable/mybutton"
-                        android:text="VIEW ENTRY LOG"
+                        android:text="ADD GUEST VEHICLE"
                         />
 
 
