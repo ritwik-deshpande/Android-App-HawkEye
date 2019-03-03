@@ -41,13 +41,14 @@ public class EntryLog {
 
     }
 
-    public EntryLog(String rnum, String uid, Date timestamp, String dsc,String timestamp_dsc,boolean exit_status) {
+    public EntryLog(String rnum, String uid, Date timestamp, String dsc,String timestamp_dsc,boolean exit_status,String datetime) {
         this.rnum = rnum;
         this.uid = uid;
         this.timestamp = timestamp;
         this.dsc = dsc;
         this.timestamp_dsc=timestamp_dsc;
         this.exit_status=exit_status;
+        this.datetime=datetime;
     }
 
     public String getRnum() {

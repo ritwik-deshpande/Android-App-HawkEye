@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     static String type;
     private FirebaseDatabase mFirebaseDatabase,mFirebaseDatabase2;
     private DatabaseReference mDatabaseReference,mDatabaseReference2;
-    private DatabaseReference mPushDatabaseReference,mPushDatabaseReference2;
+    private DatabaseReference mPushDatabaseReference,mPushDatabaseReference2,mPushDatabaseReference5;
 
     boolean loggedin;
     String phone_number;
@@ -83,9 +83,9 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-      //  mFirebaseDatabase2 = FirebaseDatabase.getInstance();
+        mFirebaseDatabase2 = FirebaseDatabase.getInstance();
         mDatabaseReference = mFirebaseDatabase.getReference().child("clients");
-       // mDatabaseReference2 = mFirebaseDatabase2.getReference().child("clients");
+        mDatabaseReference2 = mFirebaseDatabase2.getReference().child("Credential");
 
 //        if (user != null) {
 //            // User is signed in
@@ -263,6 +263,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                                     Log.d("TAG","The key is:"+key);
                                    // Log.d("TAG","The new password is:"+npassword);
                                     mPushDatabaseReference = mFirebaseDatabase.getReference().child("clients");
+                                    mPushDatabaseReference5 = mFirebaseDatabase2.getReference().child("Credential");
                                     if((boolean) snapshot.child("cl_status").getValue())
                                     {
                                         mPushDatabaseReference.child(key).child("user_key").setValue(user_key);
@@ -286,6 +287,10 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
                                 intent.putExtra("ID",id);
 
+
+
+                                intent.putExtra("userkey",user_key);
+
                                 intent.putExtra("SOCIETY",si);
 
                                 startActivity(intent);
@@ -296,6 +301,8 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
                                 Log.d("TAG","The id is"+id);
 
+                                intent.putExtra("userkey",user_key);
+
                                 intent.putExtra("ID",id);
 
                                 startActivity(intent);
@@ -305,6 +312,8 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                                 Intent intent = new Intent(MainActivity.this,GuardActivity.class);
 
                                 Log.d("TAG","The id is"+id);
+
+                                intent.putExtra("userkey",user_key);
 
                                 intent.putExtra("ID",id);
 

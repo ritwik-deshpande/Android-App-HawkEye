@@ -6,7 +6,20 @@ public class Society
     private double latitude;
     private double longitude;
     private String address;
-    private double parkSlots;
+    private int parkSlots;
+    private int Max;
+
+    public void setParkSlots(int parkSlots) {
+        this.parkSlots = parkSlots;
+    }
+
+    public int getMax() {
+        return Max;
+    }
+
+    public void setMax(int max) {
+        Max = max;
+    }
 
     public Society(){}
     //add getter setters.
@@ -44,12 +57,10 @@ public class Society
         this.address = address;
     }
 
-    public double getParkSlots() {
+    public int getParkSlots() {
         return parkSlots;
     }
 
-    public void setParkSlots(double parkSlots) {
-        this.parkSlots = parkSlots;
-    }
+
 }
 

@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -26,12 +27,13 @@ public class ForcedValidate extends AppCompatActivity {
     String id2;
     EditText uuid;
     Boolean fd;
+    ImageButton back_button;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forced_validate);
         val=(Button)findViewById(R.id.valid);
-
+        back_button=(ImageButton)findViewById(R.id.button);
         mFirebaseDatabase3=FirebaseDatabase.getInstance();
         mDatabaseReference3=mFirebaseDatabase3.getReference().child("entrylog");
 
@@ -39,7 +41,19 @@ public class ForcedValidate extends AppCompatActivity {
 //        ud=val.getText().toString();
         id2=id;
 
-        fd=false;
+        fd=false;back_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i;
+                if(id.substring(0,3).equals("GRD")) {
+                    i= new Intent(ForcedValidate.this, GuardActivity.class);
+                    i.putExtra("ID",id);
+                    startActivity(i);
+                }
+
+            }
+        });
+
 
         val.setOnClickListener(new View.OnClickListener() {
             @Override

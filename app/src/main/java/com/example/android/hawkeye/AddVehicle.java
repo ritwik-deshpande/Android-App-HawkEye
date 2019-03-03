@@ -29,6 +29,7 @@ public class AddVehicle extends AppCompatActivity  implements PopupMenu.OnMenuIt
     String vehicle_model;
     String colour;
     String reg_number;
+    String ukey;
     ImageButton btn;
 
     @Override
@@ -41,6 +42,7 @@ public class AddVehicle extends AppCompatActivity  implements PopupMenu.OnMenuIt
 
         id=getIntent().getStringExtra("ID");
         si=getIntent().getStringExtra("SOCIETY");
+        ukey=getIntent().getStringExtra("userkey");
         VC=(TextView)findViewById(R.id.vc);
         VM=(TextView)findViewById(R.id.vm);
         rn=(TextView)findViewById(R.id.reg_num);
@@ -72,7 +74,7 @@ public class AddVehicle extends AppCompatActivity  implements PopupMenu.OnMenuIt
                 colour=vehicle_color.getText().toString();
                 reg_number=rn.getText().toString();
                 Log.d("TAG","The si is"+si);
-                db.createVehicle(new Vehicle(id,vehicle_company,vehicle_model,colour,reg_number,si));
+                db.createVehicle(new Vehicle(id,vehicle_company,vehicle_model,colour,reg_number,si),id,ukey);
 
                 if(id.substring(0,3).equals("USR")) {
                     Intent intent = new Intent(AddVehicle.this, UserActivity.class);

@@ -30,6 +30,7 @@ public class MyVehiclesUser extends AppCompatActivity {
     private RecyclerViewAdapter r;
     String id;
     String si;
+    String ukey;
     ImageButton btn;
 
     @Override
@@ -49,6 +50,7 @@ public class MyVehiclesUser extends AppCompatActivity {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mDatabaseReference = mFirebaseDatabase.getReference().child("vehicles");
 
+        ukey=getIntent().getStringExtra("userkey");
         addv=(Button)findViewById(R.id.add);
         //rv=(Button)findViewById(R.id.remove);
 
@@ -58,11 +60,13 @@ public class MyVehiclesUser extends AppCompatActivity {
                 if(id.substring(0,3).equals("USR")) {
                     Intent i = new Intent(MyVehiclesUser.this, UserActivity.class);
                     i.putExtra("ID", id);
+                    i.putExtra("userkey",ukey);
                     startActivity(i);
                 }
                 if(id.substring(0,3).equals("ADM")) {
                     Intent i = new Intent(MyVehiclesUser.this, AdminActivity.class);
                     i.putExtra("ID", id);
+                    i.putExtra("userkey",ukey);
                     startActivity(i);
                 }
 
@@ -76,6 +80,7 @@ public class MyVehiclesUser extends AppCompatActivity {
                 Intent i = new Intent(MyVehiclesUser.this,AddVehicle.class);
                 i.putExtra("ID",id);
                 i.putExtra("SOCIETY",si);
+                i.putExtra("userkey",ukey);
                 startActivity(i);
             }
         });
@@ -121,11 +126,13 @@ public class MyVehiclesUser extends AppCompatActivity {
         if(id.substring(0,3).equals("USR")) {
             Intent i = new Intent(MyVehiclesUser.this, UserActivity.class);
             i.putExtra("ID", id);
+            i.putExtra("userkey",ukey);
             startActivity(i);
         }
         if(id.substring(0,3).equals("ADM")) {
             Intent i = new Intent(MyVehiclesUser.this, AdminActivity.class);
             i.putExtra("ID", id);
+            i.putExtra("userkey",ukey);
             startActivity(i);
         }
 

@@ -2,6 +2,7 @@ package com.example.android.hawkeye;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +25,13 @@ public class AdminActivity extends AppCompatActivity {
     private DatabaseReference mDatabaseReference6, mDatabaseReference5;
     private DatabaseReference mPushDatabaseReference4;
 
+
+    private static final int TEZ_REQUEST_CODE = 123;
+
+    private static final String GOOGLE_TEZ_PACKAGE_NAME = "com.google.android.apps.nbu.paisa.user";
+
+
+
     UtilFunctions utilFunctions;
 
     String email_addr;
@@ -36,11 +44,11 @@ public class AdminActivity extends AppCompatActivity {
     TextView cid;
     Button lgt;
     Button vel;
-    Button appruser, val, addgrd;
+    Button appruser, val, addgrd,parking,paym;
 
     String id;
     String si;
-
+    String ukey;
     boolean fd;
 
     @Override
@@ -59,10 +67,13 @@ public class AdminActivity extends AppCompatActivity {
         lgt = (Button) findViewById(R.id.logout);
         vel = (Button) findViewById(R.id.entrylog);
         appruser = (Button) findViewById(R.id.approve_user);
+        parking=(Button)findViewById(R.id.parking);
         id = getIntent().getStringExtra("ID");
         //si=getIntent().getStringExtra("SOCIETY");
         a_vehicle = (Button) findViewById(R.id.add_vehicle);
         a_guest_vehicle = (Button) findViewById(R.id.add_guest);
+
+        paym=(Button)findViewById(R.id.payment);
 
         utilFunctions = new UtilFunctions();
         mFirebaseDatabase4 = FirebaseDatabase.getInstance();
@@ -71,6 +82,15 @@ public class AdminActivity extends AppCompatActivity {
         mDatabaseReference5 = mFirebaseDatabase4.getReference().child("entrylog");
 
         fd = false;
+
+        parking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent= new Intent(AdminActivity.this,Maps.class);
+                intent.putExtra("ID",id);
+                startActivity(intent);
+            }
+        });
 
         addgrd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +102,30 @@ public class AdminActivity extends AppCompatActivity {
 
                 i.putExtra("userkey", user_key);
                 startActivity(i);
+            }
+        });
+
+        paym.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri uri =
+                        new Uri.Builder()
+                                .scheme("upi")
+                                .authority("pay")
+                                .appendQueryParameter("pa", "ayushvnit@oksbi")
+                                .appendQueryParameter("pn", "Test Merchant")
+                                .appendQueryParameter("mc", "123456789")
+                                .appendQueryParameter("tr", "123456789")
+                                .appendQueryParameter("tn", "Society Bills")
+                                //  .appendQueryParameter("am", Integer.toString(rent))
+                                .appendQueryParameter("cu", "INR")
+                                .appendQueryParameter("url", "https://test.merchant.website")
+                                .build();
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(uri);
+                intent.putExtra("ID",id);
+                intent.setPackage(GOOGLE_TEZ_PACKAGE_NAME);
+                startActivityForResult(intent, TEZ_REQUEST_CODE);
             }
         });
 
@@ -158,13 +202,19 @@ public class AdminActivity extends AppCompatActivity {
                             if (id.equals((String) snapshot.child("id").getValue())) {
                                 // email_addr=snapshot.child("email").getValue().toString();
                                 si = (String) snapshot.child("society_info").getValue();
+                                ukey=(String) snapshot.child("user_key").getValue();
                                 Log.d("SET", "SEtv the value of si" + si);
+
+                                Log.d("SET", "SEtv the value of si" + ukey);
+
                                 break;
                             }
                         }
 
                         Log.d("SEN", "Sending guest si" + si);
+                        Log.d("SEN", "Sending guest si" + si);
                         intent.putExtra("SOCIETY", si);
+                        intent.putExtra("userkey",ukey);
                         startActivity(intent);
 
                     }
@@ -196,6 +246,9 @@ public class AdminActivity extends AppCompatActivity {
                             if (id.equals((String) snapshot.child("id").getValue())) {
                                 // email_addr=snapshot.child("email").getValue().toString();
                                 si = (String) snapshot.child("society_info").getValue();
+                                ukey=(String) snapshot.child("user_key").getValue();
+
+
                                 Log.d("SET", "SEtv the value of si" + si);
                                 break;
                             }
@@ -203,6 +256,7 @@ public class AdminActivity extends AppCompatActivity {
 
                         Log.d("SEN", "Sending guest si" + si);
                         intent.putExtra("SOCIETY", si);
+                        intent.putExtra("userkey",ukey);
                         startActivity(intent);
 
                     }

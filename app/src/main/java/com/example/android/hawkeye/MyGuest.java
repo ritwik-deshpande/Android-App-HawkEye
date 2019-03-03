@@ -30,6 +30,7 @@ public class MyGuest extends AppCompatActivity {
     private RecyclerViewAdapterGuest r;
     String id;
     String si;
+    String ukey;
 
     ImageButton btn;
     @Override
@@ -48,6 +49,7 @@ public class MyGuest extends AppCompatActivity {
 
         si=getIntent().getStringExtra("SOCIETY");
 
+        ukey=getIntent().getStringExtra("userkey");
         btn=findViewById(R.id.back_button);
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -79,6 +81,7 @@ public class MyGuest extends AppCompatActivity {
                 Intent i = new Intent(MyGuest.this,AddGuestActivity.class);
                 i.putExtra("ID",id);
                 i.putExtra("SOCIETY",si);
+                i.putExtra("userkey",ukey);
                 startActivity(i);
             }
         });

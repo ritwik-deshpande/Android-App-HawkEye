@@ -33,7 +33,7 @@ public class Maps  extends FragmentActivity implements OnMapReadyCallback {
 
     DatabaseReference rootRef, imagesRef;
     ValueEventListener valueEventListener;
-
+    String id;
     //Marker vnit_marker,civil_marker,elec_marker,phy_marker,mech_marker,audi_marker,meta_marker,hostel_section_marker,ece_marker,chem_marker,canara_marker,archi_marker,audi_lawns_marker,apm_marker,lib_lawns_marker,cse_marker;
     //LatLng vnit,civil,electrical,phy,mech,audi,meta,hostel_section,ece,chem,canara,archi,audi_lawns,apm,lib_lawns,cse;
 
@@ -46,6 +46,7 @@ public class Maps  extends FragmentActivity implements OnMapReadyCallback {
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        id=getIntent().getStringExtra("ID");
         lst=new ArrayList<>();
         markers = new ArrayList<>();
 
@@ -131,8 +132,12 @@ public class Maps  extends FragmentActivity implements OnMapReadyCallback {
                 }
                 else
                 {
+                    Log.d("TAG",lst.get(j).getSocietyName()+" $ " + lst.get(j).getParkSlots());
                     Intent intent = new Intent(Maps.this, RentPark.class);
                     intent.putExtra("SocietyName",lst.get(j).getSocietyName());
+
+                    Log.d("TAG", " $ " +lst.get(j).getParkSlots());
+
                     intent.putExtra("parkSlots",lst.get(j).getParkSlots());
                     intent.putExtra("Rent",100);
                     startActivity(intent);
@@ -262,8 +267,8 @@ public class Maps  extends FragmentActivity implements OnMapReadyCallback {
             lst.clear();
             rootRef = FirebaseDatabase.getInstance().getReference();
             imagesRef = rootRef.child("Societies");
-            LatLng loc = new LatLng(25.27654535,82.98884151);
-            moveCamera(loc,mMap.addMarker(new MarkerOptions().position(loc) ),"Plumeria","Plumeria");
+            //LatLng loc = new LatLng(25.27654535,82.98884151);
+            //moveCamera(loc,mMap.addMarker(new MarkerOptions().position(loc) ),"Plumeria","Plumeria");
             valueEventListener = new ValueEventListener() {
 
                 int i =0;
@@ -288,6 +293,22 @@ public class Maps  extends FragmentActivity implements OnMapReadyCallback {
             imagesRef.addListenerForSingleValueEvent(valueEventListener);
 
             return null;
+        }
+    }
+
+    @Override
+    public void onBackPressed(){
+
+        Intent i;
+        if(id.substring(0,3).equals("USR")) {
+            i= new Intent(this, UserActivity.class);
+            i.putExtra("ID",id);
+            startActivity(i);
+        }
+        if(id.substring(0,3).equals("ADM")) {
+            i= new Intent(this, AdminActivity.class);
+            i.putExtra("ID",id);
+            startActivity(i);
         }
     }
 

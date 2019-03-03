@@ -32,7 +32,8 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
 
-        <activity android:name=".SignUp" />
+        <activity android:name=".SignUp"
+            android:noHistory="true"/>
 
         <service android:name=".MyFirebaseMessagingService">
             <intent-filter>
@@ -78,9 +79,12 @@
         <activity
             android:name=".Validate"
             android:noHistory="true" />
-        <activity android:name=".ForcedValidate" />
-        <activity android:name=".Maps" />
-        <activity android:name=".RentPark"></activity>
+        <activity android:name=".ForcedValidate"
+            android:noHistory="true"/>
+        <activity android:name=".Maps"
+            android:noHistory="true"/>
+        <activity android:name=".RentPark"
+            android:noHistory="true"></activity>
     </application>
 
 </manifest>

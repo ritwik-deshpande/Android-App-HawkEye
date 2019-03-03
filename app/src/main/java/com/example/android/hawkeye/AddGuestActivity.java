@@ -32,6 +32,7 @@ public class AddGuestActivity extends AppCompatActivity {
     Date dt;
     String ad;
     String sd;
+    String ukey;
     ImageButton btn;
 
     @Override
@@ -48,6 +49,9 @@ public class AddGuestActivity extends AppCompatActivity {
         vehicle_color=(TextView)findViewById(R.id.color);
         submit=(Button)findViewById(R.id.submit);
         dob=(TextView)findViewById(R.id.adate);
+
+        ukey=getIntent().getStringExtra("userkey");
+
         btn=findViewById(R.id.back_button);
         dob.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,7 +106,7 @@ public class AddGuestActivity extends AppCompatActivity {
                 ad=dob.getText().toString();
 
 
-                db.createGuestVehicle(new vehicle_guest(id,vehicle_company,vehicle_model,colour,reg_number,si,dt,5,sd));
+                db.createGuestVehicle(new vehicle_guest(id,vehicle_company,vehicle_model,colour,reg_number,si,dt,5,sd),id,ukey);
 
                 if(id.substring(0,3).equals("USR"))
                 {
